@@ -27,6 +27,9 @@ public class TagModel implements Entityable<Tag> {
     @Column( name = "name", nullable = false, length = TagName.MAX_SIZE, unique = true )
     private String name;
 
+    @ManyToMany( mappedBy = "tags", fetch = FetchType.LAZY )
+    private Set<ImageModel> images;
+
     @Column( name = "created_at", nullable = false )
     private Timestamp createdAt;
 

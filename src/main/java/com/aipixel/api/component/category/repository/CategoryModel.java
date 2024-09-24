@@ -33,6 +33,9 @@ public class CategoryModel implements Entityable<Category> {
     @Column( name = "description", nullable = false, length = CategoryDescription.MAX_SIZE )
     private String description;
 
+    @ManyToMany( mappedBy = "categories", fetch = FetchType.LAZY )
+    private Set<ImageModel> images;
+
     @CreationTimestamp
     @Column( name = "created_at", nullable = false )
     private Timestamp createdAt;
