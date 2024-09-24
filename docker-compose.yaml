@@ -1,0 +1,20 @@
+version: '3.1'
+
+volumes:
+  vol-database:
+
+services:
+  database:
+    image: mysql:latest
+    container_name: aipixel_database_container
+    hostname: aipixel_database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: aipixel.user
+      MYSQL_PASSWORD: aipixel.pass
+      MYSQL_DATABASE: aipixel-db
+    volumes:
+      - vol-database:/var/lib/mysql
+      - ./src/main/resources/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
