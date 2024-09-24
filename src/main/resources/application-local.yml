@@ -1,0 +1,13 @@
+logging:
+  level:
+    org:
+      springframework: DEBUG
+
+jpa:
+  show-sql: true
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/aipixel-db
+    username: aipixel.user
+    password: aipixel.pass
