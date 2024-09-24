@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: ai-pixel
+
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+    diver-class-name: com.mysql.cj.jdbc.Driver
