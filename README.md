@@ -3,6 +3,11 @@
 ## Índice
 
 - [Requisitos](#requisitos)
+- [Despliegue](#despliegue)
+  - [Desplegar con el IDE](#Desplegar-con-el-IDE)
+  - [Desplegar en Local](#Desplegar-en-Local)
+  - [Desplegar con Docker](#Desplegar-con-Docker)
+  - [Detener el Docker-Compose](#Detener-el-Docker-Compose)
 - [Contribución](#contribución)
 - [Versionado](#versionado)
 - [Desarrolladores](#desarrolladores)
@@ -11,6 +16,67 @@
 
 > **Java:** `21`  
 > **MAVEN:** `3.9.5`
+
+## Despliegue
+
+### Desplegar con el IDE
+
+- Levantamos los servicios con Docker (database):
+
+    ```shell
+    docker compose up
+    ```
+
+- Levantamos la aplicación con el IDE arrancando la clase `com.aipixel.api.Application` con el argumento `--spring.profiles.active=local`.
+
+### Desplegar en Local
+
+- Levantamos los servicios con Docker (database):
+
+    ```shell
+    docker compose up
+    ```
+
+- Compilamos la aplicación con el siguiente comando de MAVEN:
+
+    ```shell
+    mvn clean install
+    ```
+
+- Ejecutamos con Java el JAR `target/ai-pixel-v1.0.0-SNAPSHOT.jar` que se ha generado con el comando anterior con el siguiente comando:
+
+    ```shell
+    java -jar target/ai-pixel-v1.0.0-SNAPSHOT.jar --spring.profiles.active=local
+    ```
+
+### Desplegar con Docker
+
+- Levantamos el fichero `docker-compose.yaml` con el perfil `app` con el siguiente comando:
+
+    ```shell
+    docker compose --profile app up
+    ```
+
+### Detener el Docker-Compose
+
+Para parar la ejecución del fichero `docker-compose.yaml` lanzarémos el siguiente comando:
+
+```shell
+docker compose down
+```
+```shell
+docker compose --profile app down
+```
+
+Y si queremos pararla y además eliminar los volúmenes, le añadiremos el argumento `-v`
+
+```shell
+docker compose down -v
+```
+```shell
+docker compose --profile app down -v
+```
+
 
 ## Contribución
 

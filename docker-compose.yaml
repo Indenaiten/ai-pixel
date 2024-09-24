@@ -1,0 +1,42 @@
+version: '3.1'
+
+volumes:
+  vol-database:
+
+services:
+  database:
+    image: mysql:latest
+    container_name: aipixel_database_container
+    hostname: aipixel_database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: aipixel.user
+      MYSQL_PASSWORD: aipixel.pass
+      MYSQL_DATABASE: aipixel-db
+    volumes:
+      - vol-database:/var/lib/mysql
+      - ./src/main/resources/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+  app:
+    profiles: [ "app" ]
+    image: maven:3-eclipse-temurin-22-alpine
+    container_name: aipixel_api_container
+    hostname: aipixel_api
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: jdbc:mysql://aipixel_database:3306/aipixel-db
+      DATABASE_USER: aipixel.user
+      DATABASE_PASS: aipixel.pass
+    working_dir: /app
+    command: >
+      sh -c "echo 'Building the application...'
+      && mvn -U clean install -DskipTests=true 
+      && echo 'Launching the application...'
+      && java -jar ./target/ai-pixel-v1.0.0-SNAPSHOT.jar --spring.profiles.active=docker"
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8080
