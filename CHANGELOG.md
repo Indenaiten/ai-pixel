@@ -18,6 +18,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 #### `25/09/2024`
 
+- Se ha creado el Objeto de Acceso a Datos (`CategoryDAO`) para la entidad `Category`.
+
+
 - Se ha creado el Objeto de Acceso a Datos (`TagDAO`) para la entidad `Tag`.
 
 
