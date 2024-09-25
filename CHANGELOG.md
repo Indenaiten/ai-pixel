@@ -18,24 +18,30 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 #### `25/09/2024`
 
+- Se ha implementado el endpoint de Imágenes que nos permite recuperar todas las imágenes almacenadas en la base de datos.
+  - Se ha creado el repositorio `ImageRepository` para recuperar la información de la Base de Datos mediante el DAO `ImageDao`.
+  - Se ha creado el servicio `ImageService` para recuperar la información mediante el repositorio `ImageRepository`.
+  - Se ha creado el controlador `ImageRestController` para recuperar la información mediante el servicio `ImageService`.
+
+
 - Se ha creado el Objeto de Acceso a Datos (`DAO`) para la entidad `Image`.
 
 
 - Se han creado los siguientes Objetos de Transferencia de Datos (`DTO`) para las entidades `Image`, `Tag` y `Category`:
-    - `ImageDto`
-    - `TagDto`
-    - `CategoryDto`
+  - `ImageDto`
+  - `TagDto`
+  - `CategoryDto`
 
 
 - Se añadió el modelo `ImageModel` para representar la información de las imágenes en la Base de Datos.
 
 
 - Se añadieron los siguientes `ValueObject` para la entidad `Image`:
-    - `ImageId`
-    - `ImageName`
-    - `ImageFileName`
-    - `ImageDescription`
-    - `ImageValoration`
+  - `ImageId`
+  - `ImageName`
+  - `ImageFileName`
+  - `ImageDescription`
+  - `ImageValoration`
 
 
 - Se añadió la entidad `Image` para representar las imágenes.
@@ -45,8 +51,8 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 
 - Se añadieron los siguientes `ValueObject` para la entidad `Tag`:
-    - `TagId`
-    - `TagName`
+  - `TagId`
+  - `TagName`
 
 
 - Se añadió la entidad `Tag` para representar las etiquetas de las imágenes.
@@ -56,9 +62,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 
 - Se añadieron los siguientes `ValueObject` para la entidad `Category`:
-    - `CategoryId`
-    - `CategoryName`
-    - `CategoryDescription`
+  - `CategoryId`
+  - `CategoryName`
+  - `CategoryDescription`
 
 
 - Se añadió la entidad `Category` para representar las categorías de las imágenes.
