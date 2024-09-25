@@ -18,6 +18,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 #### `25/09/2024`
 
+- Se ha creado el Objeto de Acceso a Datos (`DAO`) para la entidad `Image`.
+
+
 - Se han creado los siguientes Objetos de Transferencia de Datos (`DTO`) para las entidades `Image`, `Tag` y `Category`:
     - `ImageDto`
     - `TagDto`
