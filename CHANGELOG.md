@@ -18,13 +18,16 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 #### `25/09/2024`
 
+- Se ha creado el Objeto de Acceso a Datos (`TagDAO`) para la entidad `Tag`.
+
+
 - Se ha implementado el endpoint de Imágenes que nos permite recuperar todas las imágenes almacenadas en la base de datos.
   - Se ha creado el repositorio `ImageRepository` para recuperar la información de la Base de Datos mediante el DAO `ImageDao`.
   - Se ha creado el servicio `ImageService` para recuperar la información mediante el repositorio `ImageRepository`.
   - Se ha creado el controlador `ImageRestController` para recuperar la información mediante el servicio `ImageService`.
 
 
-- Se ha creado el Objeto de Acceso a Datos (`DAO`) para la entidad `Image`.
+- Se ha creado el Objeto de Acceso a Datos (`ImageDAO`) para la entidad `Image`.
 
 
 - Se han creado los siguientes Objetos de Transferencia de Datos (`DTO`) para las entidades `Image`, `Tag` y `Category`:
