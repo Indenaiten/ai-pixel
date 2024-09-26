@@ -29,6 +29,8 @@ public class ImageDto implements DTO {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private static final String IMAGES_URL = "/api/resources/images";
+
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     private String id;
@@ -48,6 +50,11 @@ public class ImageDto implements DTO {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
+
+    @JsonProperty( "url" )
+    public String getUrl(){
+        return String.format( "%s/%s", IMAGES_URL, this.getFileName() );
+    }
 
     @JsonProperty( "categories" )
     public List<CategoryDto> getCategories(){
