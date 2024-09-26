@@ -3,6 +3,7 @@ package com.aipixel.api.component.image;
 import com.aipixel.api.common.controller.response.ApiResponse;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
 import com.aipixel.api.component.image.controller.form.SaveImageForm;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +45,6 @@ public interface ImageRestController {
      * @return Una {@link ApiResponse} con un mensaje de confirmación.
      */
     @PostMapping( value = "/save" )
-    ApiResponse<String> save( @ModelAttribute() SaveImageForm data );
+    ApiResponse<String> save( @Valid @ModelAttribute() SaveImageForm data );
 
 }

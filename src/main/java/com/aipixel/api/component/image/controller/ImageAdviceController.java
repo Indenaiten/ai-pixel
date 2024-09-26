@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ImageAdviceController {
 
-    @ExceptionHandler( ImageNotFoundException.class )
+    @ExceptionHandler({ ImageNotFoundException.class })
     public ResponseEntity<ApiResponse<Void>> exception( final ImageNotFoundException e ) {
         final ApiResponse<Void> response = ApiResponse.error().message( e.getMessage() ).build();
         return ResponseEntity.internalServerError().body( response );

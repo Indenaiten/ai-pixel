@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -45,21 +44,18 @@ public class ImageMapper {
         final SaveImageRequest.SaveImageRequestBuilder builder = SaveImageRequest.builder();
 
         builder.favorite( form.isFavorite() );
+        builder.name( ImageName.of( form.getName() ));
         builder.categories( form.getCategories().stream().map( CategoryId::of ).collect( Collectors.toSet() ));
         builder.tags( form.getTags().stream().map( TagId::of ).collect( Collectors.toSet() ));
 
         form.getDate().ifPresent( value -> builder.date(LocalDate.parse( value, LocalDateTimeFormatter.FULL_DATE_FORMATTER )));
-        form.getName().ifPresent( value -> builder.name( ImageName.of( value )));
         form.getDescription().ifPresent( value -> builder.description( ImageDescription.of( value )));
         form.getValoration().ifPresent( value -> builder.imageValoration( ImageValoration.of( value )));
 
-        final Optional<MultipartFile> optionalImage = form.getImage();
-        if( optionalImage.isPresent() ){
-            final MultipartFile image = optionalImage.get();
-            builder.fileName( image.getOriginalFilename() );
-            builder.fileContentType( image.getContentType() );
-            builder.fileContent( image.getBytes() );
-        }
+        final MultipartFile image = form.getImage();
+        builder.fileName( image.getOriginalFilename() );
+        builder.fileContentType( image.getContentType() );
+        builder.fileContent( image.getBytes() );
 
         return builder.build();
     }
