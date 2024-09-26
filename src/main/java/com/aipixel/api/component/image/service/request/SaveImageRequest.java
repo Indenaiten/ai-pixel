@@ -6,9 +6,9 @@ import com.aipixel.api.component.image.vo.ImageDescription;
 import com.aipixel.api.component.image.vo.ImageName;
 import com.aipixel.api.component.image.vo.ImageValoration;
 import com.aipixel.api.component.tag.vo.TagId;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
@@ -25,7 +25,6 @@ import java.util.Set;
  *
  * @See ServiceRequest
  */
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,16 +35,24 @@ public class SaveImageRequest implements ServiceRequest {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    private Boolean favorite;
-    private LocalDate date;
+    @NotNull( message = "The name of the image is required" )
     private ImageName name;
+
+    @NotNull( message = "The name of the image is required" )
     private String fileName;
+
+    @NotNull( message = "The content of the image is required" )
     private byte[] fileContent;
+
+    @NotNull( message = "The content type of the image is required" )
     private String fileContentType;
+
+    private Boolean favorite = false;
+    private LocalDate date;
     private ImageDescription description;
     private ImageValoration imageValoration;
-    private Set<CategoryId> categories;
-    private Set<TagId> tags;
+    private Set<CategoryId> categories = Collections.emptySet();
+    private Set<TagId> tags = Collections.emptySet();
 
 
 
@@ -61,20 +68,20 @@ public class SaveImageRequest implements ServiceRequest {
         return Optional.ofNullable( this.date );
     }
 
-    public Optional<ImageName> getName() {
-        return Optional.ofNullable( this.name );
+    public ImageName getName() {
+        return this.name;
     }
 
-    public Optional<String> getFileName() {
-        return Optional.ofNullable( this.fileName );
+    public String getFileName() {
+        return this.fileName;
     }
 
-    public Optional<byte[]> getFileContent() {
-        return Optional.ofNullable( this.fileContent );
+    public byte[] getFileContent() {
+        return this.fileContent;
     }
 
-    public Optional<String> getFileContentType() {
-        return Optional.ofNullable( this.fileContentType );
+    public String getFileContentType() {
+        return this.fileContentType;
     }
 
     public Optional<ImageDescription> getDescription() {

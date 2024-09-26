@@ -90,18 +90,17 @@ public class ImageServiceImpl implements ImageService {
 
         imageBuilder.id( id );
         imageBuilder.favorite( request.isFavorite() );
+        imageBuilder.name( request.getName() );
         imageBuilder.categories( categories );
         imageBuilder.tags( tags );
 
         request.getDate().ifPresent( imageBuilder::date );
-        request.getName().ifPresent( imageBuilder::name );
         request.getDescription().ifPresent( imageBuilder::description );
         request.getImageValoration().ifPresent( imageBuilder::imageValoration );
 
-        final IllegalArgumentException exception = new IllegalArgumentException( "Image file data not found" );
-        final String fileName = request.getFileName().orElseThrow( () -> exception );
-        final byte[] fileContent = request.getFileContent().orElseThrow( () -> exception );
-        final String fileContentType = request.getFileContentType().orElseThrow( () -> exception );
+        final String fileName = request.getFileName();
+        final byte[] fileContent = request.getFileContent();
+        final String fileContentType = request.getFileContentType();
 
         final String[] fileNameParts = fileName.split( "\\." );
         final String extensionFile = fileNameParts[ fileNameParts.length -1 ];

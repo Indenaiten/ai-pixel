@@ -3,6 +3,8 @@ package com.aipixel.api.component.image;
 import com.aipixel.api.component.image.exception.ImageNotFoundException;
 import com.aipixel.api.component.image.service.request.SaveImageRequest;
 import com.aipixel.api.component.image.vo.ImageId;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +13,7 @@ import java.util.Optional;
 /**
  * Servicio que proporciona operaciones relacionadas con las imágenes.
  */
+@Validated
 public interface ImageService {
 
 
@@ -41,6 +44,6 @@ public interface ImageService {
      *
      * @return El identificador de la imagen guardada como un {@link ImageId}.
      */
-    ImageId saveImage( SaveImageRequest request );
+    ImageId saveImage( @Valid SaveImageRequest request );
 
 }
