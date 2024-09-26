@@ -3,7 +3,7 @@ server:
 
 manager:
   file:
-    directory: ./public/images
+    directory: ./public/resources/images
 
 spring:
   application:
@@ -12,6 +12,7 @@ spring:
   web:
     resources:
       static-locations: ./public
+
   mvc:
     servlet:
       path: /api/v1
