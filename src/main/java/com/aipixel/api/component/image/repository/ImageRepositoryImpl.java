@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 
@@ -46,8 +45,7 @@ public class ImageRepositoryImpl implements ImageRepository {
     @Override
     public List<Image> findAll() {
         return this.imageDao.findAll()
-                .stream().map(ImageMapper::modelToEntity)
-                .collect(Collectors.toList());
+                .stream().map( ImageMapper::modelToEntity ).toList();
     }
 
 

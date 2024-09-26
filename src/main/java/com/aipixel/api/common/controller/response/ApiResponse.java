@@ -24,7 +24,7 @@ public class ApiResponse<T> implements Serializable {
 
     private final ApiResponseStatusCode code;
     private final String message;
-    private final T data;
+    private final transient T data;
 
 
 

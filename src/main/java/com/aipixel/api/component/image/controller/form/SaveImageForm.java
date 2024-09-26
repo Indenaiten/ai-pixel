@@ -2,16 +2,16 @@ package com.aipixel.api.component.image.controller.form;
 
 import com.aipixel.api.common.controller.Form;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 
@@ -34,7 +34,7 @@ public class SaveImageForm implements Form {
     private Boolean favorite;
     private String date;
     private String name;
-    private MultipartFile image;
+    private transient MultipartFile image;
     private String description;
     private Short valoration;
     private List<Long> categories;
@@ -47,7 +47,7 @@ public class SaveImageForm implements Form {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public Boolean isFavorite() {
-        return this.favorite != null ? this.favorite : false;
+        return this.favorite != null && this.favorite;
     }
 
     public Optional<String> getDate() {

@@ -1,20 +1,18 @@
 package com.aipixel.api.component.image.controller.dto;
 
 import com.aipixel.api.common.controller.DTO;
-import com.aipixel.api.component.category.Category;
 import com.aipixel.api.component.category.controller.dto.CategoryDto;
 import com.aipixel.api.component.image.Image;
-import com.aipixel.api.component.tag.Tag;
 import com.aipixel.api.component.tag.controller.dto.TagDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 
 /**

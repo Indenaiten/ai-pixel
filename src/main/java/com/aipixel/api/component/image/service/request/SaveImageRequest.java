@@ -3,7 +3,6 @@ package com.aipixel.api.component.image.service.request;
 import com.aipixel.api.common.service.request.ServiceRequest;
 import com.aipixel.api.component.category.vo.CategoryId;
 import com.aipixel.api.component.image.vo.ImageDescription;
-import com.aipixel.api.component.image.vo.ImageFileName;
 import com.aipixel.api.component.image.vo.ImageName;
 import com.aipixel.api.component.image.vo.ImageValoration;
 import com.aipixel.api.component.tag.vo.TagId;
@@ -55,7 +54,7 @@ public class SaveImageRequest implements ServiceRequest {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public Boolean isFavorite() {
-        return this.favorite != null ? this.favorite : false;
+        return this.favorite != null && this.favorite;
     }
 
     public Optional<LocalDate> getDate() {

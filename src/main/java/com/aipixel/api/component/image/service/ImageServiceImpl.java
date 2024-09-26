@@ -8,7 +8,8 @@ import com.aipixel.api.component.image.ImageRepository;
 import com.aipixel.api.component.image.ImageService;
 import com.aipixel.api.component.image.exception.ImageNotFoundException;
 import com.aipixel.api.component.image.service.request.SaveImageRequest;
-import com.aipixel.api.component.image.vo.*;
+import com.aipixel.api.component.image.vo.ImageFileName;
+import com.aipixel.api.component.image.vo.ImageId;
 import com.aipixel.api.component.tag.Tag;
 import com.aipixel.api.component.tag.TagRepository;
 import lombok.SneakyThrows;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 

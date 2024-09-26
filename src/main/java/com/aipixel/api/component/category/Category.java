@@ -6,7 +6,6 @@ import com.aipixel.api.component.category.vo.CategoryId;
 import com.aipixel.api.component.category.vo.CategoryName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;

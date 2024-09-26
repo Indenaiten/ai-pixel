@@ -13,7 +13,6 @@ import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 
@@ -49,8 +48,7 @@ public class ImageRestControllerImpl implements ImageRestController {
     @Override
     public ApiResponse<List<ImageDto>> findAll() {
         final List<ImageDto> result = this.imageService.findAll()
-                .stream().map( ImageMapper::entityToImageDto )
-                .collect( Collectors.toList() );
+            .stream().map( ImageMapper::entityToImageDto ).toList();
         return ApiResponse.success().build( result );
     }
 

@@ -1,7 +1,6 @@
 package com.aipixel.api.component.image.repository;
 
 import com.aipixel.api.component.category.repository.CategoryModel;
-import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.image.vo.ImageDescription;
 import com.aipixel.api.component.image.vo.ImageName;
 import com.aipixel.api.component.image.vo.ImageValoration;
@@ -9,7 +8,6 @@ import com.aipixel.api.component.tag.repository.TagModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -53,8 +53,9 @@ public class ImageMapper {
         form.getDescription().ifPresent( value -> builder.description( ImageDescription.of( value )));
         form.getValoration().ifPresent( value -> builder.imageValoration( ImageValoration.of( value )));
 
-        if( form.getImage().isPresent() ){
-            final MultipartFile image = form.getImage().get();
+        final Optional<MultipartFile> optionalImage = form.getImage();
+        if( optionalImage.isPresent() ){
+            final MultipartFile image = optionalImage.get();
             builder.fileName( image.getOriginalFilename() );
             builder.fileContentType( image.getContentType() );
             builder.fileContent( image.getBytes() );
@@ -68,8 +69,8 @@ public class ImageMapper {
         final ImageDto.ImageDtoBuilder builder = ImageDto.builder();
 
         builder.favorite( image.isFavorite() );
-        builder.categories( image.getCategories().stream().map( CategoryMapper::entityToCategoryDto ).collect( Collectors.toList() ));
-        builder.tags( image.getTags().stream().map( TagMapper::entityToTagDto ).collect( Collectors.toList() ));
+        builder.categories( image.getCategories().stream().map( CategoryMapper::entityToCategoryDto ).toList() );
+        builder.tags( image.getTags().stream().map( TagMapper::entityToTagDto ).toList() );
 
         image.getId().ifPresent( value -> builder.id( value.toString() ));
         image.getDate().ifPresent( value -> builder.date( value.format( LocalDateTimeFormatter.FULL_DATE_FORMATTER )));
@@ -88,8 +89,8 @@ public class ImageMapper {
         final ImageModel.ImageModelBuilder builder = ImageModel.builder();
 
         builder.favorite( entity.isFavorite() );
-        builder.categories( entity.getCategories().stream().map( CategoryMapper::entityToModel ).collect( Collectors.toList() ));
-        builder.tags( entity.getTags().stream().map( TagMapper::entityToModel ).collect( Collectors.toList() ));
+        builder.categories( entity.getCategories().stream().map( CategoryMapper::entityToModel ).toList() );
+        builder.tags( entity.getTags().stream().map( TagMapper::entityToModel ).toList() );
 
         entity.getId().ifPresent( value -> builder.id( value.toString() ));
         entity.getDate().ifPresent( value -> builder.date( new Date( value.toEpochDay() )));
