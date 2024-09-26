@@ -1,10 +1,13 @@
 package com.aipixel.api.component.image.controller;
 
 import com.aipixel.api.common.controller.response.ApiResponse;
+import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.image.ImageMapper;
 import com.aipixel.api.component.image.ImageRestController;
 import com.aipixel.api.component.image.ImageService;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
+import com.aipixel.api.component.image.vo.ImageId;
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -47,6 +50,15 @@ public class ImageRestControllerImpl implements ImageRestController {
                 .stream().map( ImageMapper::entityToImageDto )
                 .collect( Collectors.toList() );
         return ApiResponse.success().build( result );
+    }
+
+
+    @SneakyThrows
+    @Override
+    public ApiResponse<ImageDto> findById( final String id ) {
+        final ImageId imageId = ImageId.of( id );
+        final Image image = this.imageService.findById( imageId );
+        return ApiResponse.success().build( ImageMapper.entityToImageDto( image ));
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

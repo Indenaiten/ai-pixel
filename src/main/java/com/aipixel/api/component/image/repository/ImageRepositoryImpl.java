@@ -3,10 +3,12 @@ package com.aipixel.api.component.image.repository;
 import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.image.ImageMapper;
 import com.aipixel.api.component.image.ImageRepository;
+import com.aipixel.api.component.image.vo.ImageId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -46,6 +48,12 @@ public class ImageRepositoryImpl implements ImageRepository {
         return this.imageDao.findAll()
                 .stream().map(ImageMapper::modelToEntity)
                 .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public Optional<Image> findById( final ImageId id ) {
+        return this.imageDao.findById( id.toString() ).map( ImageMapper::modelToEntity );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
