@@ -2,13 +2,21 @@ package com.aipixel.api.component.image;
 
 import com.aipixel.api.common.datetime.LocalDateTimeFormatter;
 import com.aipixel.api.component.category.CategoryMapper;
+import com.aipixel.api.component.category.vo.CategoryId;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
+import com.aipixel.api.component.image.controller.form.SaveImageForm;
 import com.aipixel.api.component.image.repository.ImageModel;
+import com.aipixel.api.component.image.service.request.SaveImageRequest;
 import com.aipixel.api.component.image.vo.*;
 import com.aipixel.api.component.tag.TagMapper;
+import com.aipixel.api.component.tag.vo.TagId;
+import lombok.SneakyThrows;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 
@@ -31,6 +39,30 @@ public class ImageMapper {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| METHODS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
+
+    @SneakyThrows
+    public static SaveImageRequest formToSaveImageRequest( final SaveImageForm form ) {
+        final SaveImageRequest.SaveImageRequestBuilder builder = SaveImageRequest.builder();
+
+        builder.favorite( form.isFavorite() );
+        builder.categories( form.getCategories().stream().map( CategoryId::of ).collect( Collectors.toSet() ));
+        builder.tags( form.getTags().stream().map( TagId::of ).collect( Collectors.toSet() ));
+
+        form.getDate().ifPresent( value -> builder.date(LocalDate.parse( value, LocalDateTimeFormatter.FULL_DATE_FORMATTER )));
+        form.getName().ifPresent( value -> builder.name( ImageName.of( value )));
+        form.getDescription().ifPresent( value -> builder.description( ImageDescription.of( value )));
+        form.getValoration().ifPresent( value -> builder.imageValoration( ImageValoration.of( value )));
+
+        if( form.getImage().isPresent() ){
+            final MultipartFile image = form.getImage().get();
+            builder.fileName( image.getOriginalFilename() );
+            builder.fileContentType( image.getContentType() );
+            builder.fileContent( image.getBytes() );
+        }
+
+        return builder.build();
+    }
+
 
     public static ImageDto entityToImageDto( final Image image ) {
         final ImageDto.ImageDtoBuilder builder = ImageDto.builder();

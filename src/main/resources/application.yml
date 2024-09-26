@@ -1,9 +1,23 @@
 server:
   port: 8080
 
+manager:
+  file:
+    directory: ./public/images
+
 spring:
   application:
     name: ai-pixel
+
+  web:
+    resources:
+      static-locations: ./public
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
 
   datasource:
     url: ${DATABASE_URL}

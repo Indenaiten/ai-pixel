@@ -56,6 +56,12 @@ public class ImageRepositoryImpl implements ImageRepository {
         return this.imageDao.findById( id.toString() ).map( ImageMapper::modelToEntity );
     }
 
+
+    @Override
+    public void save( final Image image ) {
+        this.imageDao.save( ImageMapper.entityToModel( image ));
+    }
+
 // ------------------------------------------------------------------------------------------------------------------ \\
 
 }

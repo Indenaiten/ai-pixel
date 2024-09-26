@@ -2,9 +2,8 @@ package com.aipixel.api.component.image;
 
 import com.aipixel.api.common.controller.response.ApiResponse;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.aipixel.api.component.image.controller.form.SaveImageForm;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +35,15 @@ public interface ImageRestController {
     @GetMapping( "/find/id/{id}" )
     ApiResponse<ImageDto> findById( @PathVariable( "id" ) String id );
 
+
+    /**
+     * Guarda una imagen en la aplicación.
+     *
+     * @param data Los datos de la imagen a guardar.
+     *
+     * @return Una {@link ApiResponse} con un mensaje de confirmación.
+     */
+    @PostMapping( value = "/save" )
+    ApiResponse<String> save( @ModelAttribute() SaveImageForm data );
 
 }

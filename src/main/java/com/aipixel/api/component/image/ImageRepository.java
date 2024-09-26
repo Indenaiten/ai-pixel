@@ -29,4 +29,12 @@ public interface ImageRepository {
      */
     Optional<Image> findById( ImageId id );
 
+
+    /**
+     * Guarda una imagen en la Base de Datos.
+     *
+     * @param image La imagen que se va a guardar como entidad de tipo {@link Image}.
+     */
+    void save( Image image );
+
 }
