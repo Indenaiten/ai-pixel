@@ -18,3 +18,25 @@ services:
       - ./src/main/resources/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+
+  app:
+    profiles: [ "app" ]
+    image: maven:3-eclipse-temurin-21-alpine
+    container_name: aipixel_app_container
+    hostname: aipixel_app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: jdbc:mysql://database:3306/aipixel-db?allowPublicKeyRetrieval=true
+      DATABASE_USER: aipixel.user
+      DATABASE_PASSWORD: aipixel.pass
+    working_dir: /app
+    command: >
+      sh -c "echo 'Building the application...'
+      && mvn -U clean install -DskipTests=true 
+      && echo 'Launching the application...'
+      && java -jar target/ai-pixel-v1.0.0-SNAPSHOT.jar"
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8080

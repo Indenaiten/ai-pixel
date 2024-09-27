@@ -22,8 +22,11 @@ spring:
     max-file-size: 100MB
     max-request-size: 100MB
 
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USER}
-    password: ${DATABASE_PASS}
-    diver-class-name: com.mysql.cj.jdbc.Driver
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver

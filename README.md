@@ -7,6 +7,7 @@
 - [Despliegue](#despliegue)
   - [Desplegar con el IDE](#Desplegar-con-el-IDE)
   - [Desplegar en Local](#Desplegar-en-Local)
+  - [Desplegar con Docker](#Desplegar-con-Docker)
   - [Detener el Docker-Compose](#Detener-el-Docker-Compose)
 - [Contribución](#contribución)
 - [Versionado](#versionado)
@@ -55,12 +56,23 @@ También nos permitirá crear y marcar las imágenes con etiquetas y categorías
     java -jar target/ai-pixel-v1.0.0-SNAPSHOT.jar --spring.profiles.active=local
     ```
 
+### Desplegar con Docker
+
+Levantamos el fichero `docker-compose.yaml` con el perfil `app` con el siguiente comando:
+
+```shell
+docker compose --profile app up
+```
+  
 ### Detener el Docker-Compose
 
 Para parar la ejecución del fichero `docker-compose.yaml` lanzarémos el siguiente comando:
 
 ```shell
 docker compose down
+```
+```shell
+docker compose --profile app down
 ```
 
 Y si queremos pararla y además eliminar los volúmenes, le añadiremos el argumento `-v`
