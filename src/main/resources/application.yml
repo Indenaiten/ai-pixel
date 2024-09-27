@@ -5,6 +5,10 @@ manager:
   file:
     directory: ./public/resources/images
 
+images:
+  url:
+    base: /api/v1/resources/images
+
 spring:
   application:
     name: ai-pixel

@@ -1,6 +1,7 @@
 package com.aipixel.api.component.image.controller;
 
 import com.aipixel.api.common.controller.response.ApiResponse;
+import com.aipixel.api.common.properties.ApplicationProperties;
 import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.image.ImageMapper;
 import com.aipixel.api.component.image.ImageRestController;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 public class ImageRestControllerImpl implements ImageRestController {
 
+    private final ApplicationProperties applicationProperties;
     private final ImageService imageService;
 
 
@@ -33,9 +35,14 @@ public class ImageRestControllerImpl implements ImageRestController {
     /**
      * Constructor al que se le inyectan las dependencias necesarias.
      *
+     * @param applicationProperties Las propiedades de la aplicación.
      * @param imageService El servicio de imágenes.
      */
-    public ImageRestControllerImpl( final ImageService imageService ) {
+    public ImageRestControllerImpl(
+            final ApplicationProperties applicationProperties,
+            final ImageService imageService
+    ) {
+        this.applicationProperties = applicationProperties;
         this.imageService = imageService;
     }
 
@@ -44,6 +51,13 @@ public class ImageRestControllerImpl implements ImageRestController {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| IMPLEMENTED METHODS |---------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
+
+
+    @Override
+    public ApiResponse<String> getUrlBaseImage() {
+        return ApiResponse.success().build( this.applicationProperties.getImagesUrlBase() );
+    }
+
 
     @Override
     public ApiResponse<List<ImageDto>> findAll() {

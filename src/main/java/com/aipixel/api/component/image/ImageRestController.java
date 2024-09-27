@@ -16,6 +16,14 @@ import java.util.List;
 @RequestMapping( "/image" )
 public interface ImageRestController {
 
+    /**
+     * Obtiene la URL base de las imágenes.
+     *
+     * @return Una {@link ApiResponse} con la URL base de la imagen.
+     */
+    @GetMapping( "/url" )
+    ApiResponse<String> getUrlBaseImage( );
+
 
     /**
      * Obtiene todas las imágenes como entidades de tipo {@link ImageDto}.
