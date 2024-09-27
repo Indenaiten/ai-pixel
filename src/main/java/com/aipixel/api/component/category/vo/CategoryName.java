@@ -38,19 +38,19 @@ public class CategoryName extends ValueObject<String> {
 
     public CategoryName( final String value ){
         if( value == null || value.isEmpty() ){
-            throw new IllegalArgumentException( "The Category name must not be null or empty" );
+            throw new IllegalArgumentException( "El nombre de la categoría no puede ser nulo o vacío" );
         }
         if( value.length() < MIN_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Category name must have at least %d characters", MIN_SIZE ));
+                    String.format( "El nombre de la categoría debe tener al menos %d caracteres", MIN_SIZE ));
         }
         if( value.length() > MAX_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The v name must have at most %d characters", MAX_SIZE ));
+                    String.format( "El nombre de la categoría no puede tener más de %d caracteres", MAX_SIZE ));
         }
         if( !PATTERN_CATEGORY_NAME.matcher( value ).matches() ){
             throw new IllegalArgumentException(
-                    String.format( "The Category name must have the following format: %s", PATTERN_CATEGORY_NAME));
+                    String.format( "El nombre de la categoría no cumple con el formato requerido: %s", PATTERN_CATEGORY_NAME ));
         }
 
         this.value = value;

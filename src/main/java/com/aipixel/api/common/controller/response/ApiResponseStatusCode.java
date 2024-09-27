@@ -51,7 +51,7 @@ public enum ApiResponseStatusCode {
                 return code;
             }
         }
-        throw new IllegalArgumentException( String.format( "No enum constant with value %d", value ));
+        throw new IllegalArgumentException( String.format( "No existe un código de estado correspondiente al valor \"%d\"", value ) );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

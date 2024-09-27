@@ -28,10 +28,10 @@ public class TagId extends ValueObject<Long> {
 
     public TagId( final Long value ){
         if( value == null ){
-            throw new IllegalArgumentException( "The Tag ID must not be null" );
+            throw new IllegalArgumentException( "El ID de la etiqueta no puede ser nulo" );
         }
         if( value <= 0 ){
-            throw new IllegalArgumentException( "The Tag ID must be greater than 0" );
+            throw new IllegalArgumentException( "El ID de la etiqueta debe ser mayor a 0" );
         }
 
         this.value = value;

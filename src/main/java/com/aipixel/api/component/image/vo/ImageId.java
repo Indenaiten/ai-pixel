@@ -29,7 +29,7 @@ public class ImageId extends ValueObject<UUID> {
 
     public ImageId( final UUID value ){
         if( value == null ){
-            throw new IllegalArgumentException( "The Image ID must not be null" );
+            throw new IllegalArgumentException( "El ID de la imagen no puede ser nulo" );
         }
 
         this.value = value;

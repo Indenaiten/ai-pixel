@@ -33,10 +33,10 @@ public class SaveImageForm implements Form {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    @NotNull( message = "The name of the image is required" )
+    @NotNull( message = "El nombre de la imagen es requerido" )
     private String name;
 
-    @NotNull( message = "The image is required" )
+    @NotNull( message = "La imagen es requerida" )
     private transient MultipartFile image;
 
     private Boolean favorite = false;

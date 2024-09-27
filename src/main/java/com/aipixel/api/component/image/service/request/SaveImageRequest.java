@@ -35,16 +35,16 @@ public class SaveImageRequest implements ServiceRequest {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    @NotNull( message = "The name of the image is required" )
+    @NotNull( message = "El nombre de la imagen es requerido" )
     private ImageName name;
 
-    @NotNull( message = "The name of the image is required" )
+    @NotNull( message = "El nombre del archivo de la imagen es requerido" )
     private String fileName;
 
-    @NotNull( message = "The content of the image is required" )
+    @NotNull( message = "El contenido de la imagen es requerido" )
     private byte[] fileContent;
 
-    @NotNull( message = "The content type of the image is required" )
+    @NotNull( message = "El tipo de contenido de la imagen es requerido" )
     private String fileContentType;
 
     private Boolean favorite = false;

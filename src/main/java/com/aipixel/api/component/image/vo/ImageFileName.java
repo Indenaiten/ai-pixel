@@ -29,7 +29,7 @@ public class ImageFileName extends ValueObject<File> {
 
     public ImageFileName( final File value ){
         if( value == null ){
-            throw new IllegalArgumentException( "The Image file name must not be null" );
+            throw new IllegalArgumentException( "El nombre del archivo de la imagen no puede ser nulo" );
         }
 
         this.value = value;

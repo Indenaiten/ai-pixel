@@ -37,19 +37,19 @@ public class ImageDescription extends ValueObject<String> {
 
     public ImageDescription( final String value ){
         if( value == null || value.isEmpty() ){
-            throw new IllegalArgumentException( "The Image description must not be null or empty" );
+            throw new IllegalArgumentException( "La descripción de la imagen no puede ser nula o vacía" );
         }
         if( value.length() < MIN_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Image description must have at least %d characters", MIN_SIZE ));
+                    String.format( "La descripción de la imagen debe tener al menos %d caracteres", MIN_SIZE ));
         }
         if( value.length() > MAX_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Image description must have at most %d characters", MAX_SIZE ));
+                    String.format( "La descripción de la imagen no puede tener más de %d caracteres", MAX_SIZE ));
         }
         if( !PATTERN_IMAGE_DESCRIPTION.matcher( value ).matches() ){
             throw new IllegalArgumentException(
-                    String.format( "The Image description must have the following format: %s", PATTERN_IMAGE_DESCRIPTION ));
+                    String.format( "La descripción de la imagen no cumple con el formato requerido: %s", PATTERN_IMAGE_DESCRIPTION ));
         }
 
         this.value = value;

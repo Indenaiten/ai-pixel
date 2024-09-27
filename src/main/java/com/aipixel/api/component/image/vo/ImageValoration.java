@@ -34,15 +34,15 @@ public class ImageValoration extends ValueObject<Short> {
 
     public ImageValoration(final Short value ){
         if( value == null ){
-            throw new IllegalArgumentException( "The Image valoration must not be null" );
+            throw new IllegalArgumentException( "La valoración de la imagen no puede ser nula" );
         }
         if( value < MIN_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Image valoration must have at least %d characters", MIN_SIZE ));
+                    String.format( "La valoración de la imagen debe ser mayor o igual a %d", MIN_SIZE ));
         }
         if( value > MAX_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Image valoration must have at most %d characters", MAX_SIZE ));
+                    String.format( "La valoración de la imagen no puede ser mayor a %d", MAX_SIZE ));
         }
 
         this.value = value;

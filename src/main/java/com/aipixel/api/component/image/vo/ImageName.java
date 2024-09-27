@@ -38,19 +38,19 @@ public class ImageName extends ValueObject<String> {
 
     public ImageName( final String value ){
         if( value == null || value.isEmpty() ){
-            throw new IllegalArgumentException( "The Image name must not be null or empty" );
+            throw new IllegalArgumentException( "El nombre de la imagen no puede ser nulo o vacío" );
         }
         if( value.length() < MIN_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Image name must have at least %d characters", MIN_SIZE ));
+                    String.format( "El nombre de la imagen debe tener al menos %d caracteres", MIN_SIZE ));
         }
         if( value.length() > MAX_SIZE ){
             throw new IllegalArgumentException(
-                    String.format( "The Image name must have at most %d characters", MAX_SIZE ));
+                    String.format( "El nombre de la imagen no puede tener más de %d caracteres", MAX_SIZE ));
         }
         if( !PATTERN_IMAGE_NAME.matcher( value ).matches() ){
             throw new IllegalArgumentException(
-                    String.format( "The Image name must have the following format: %s", PATTERN_IMAGE_NAME ));
+                    String.format( "El nombre de la imagen no cumple con el formato requerido: %s", PATTERN_IMAGE_NAME ));
         }
 
         this.value = value;

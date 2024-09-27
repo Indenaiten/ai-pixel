@@ -28,10 +28,10 @@ public class CategoryId extends ValueObject<Long> {
 
     public CategoryId( final Long value ){
         if( value == null ){
-            throw new IllegalArgumentException( "The Category ID must not be null" );
+            throw new IllegalArgumentException( "La ID de la categoría no puede ser nula" );
         }
         if( value <= 0 ){
-            throw new IllegalArgumentException( "The Category ID must be greater than 0" );
+            throw new IllegalArgumentException( "La ID de la categoría debe ser mayor a 0" );
         }
 
         this.value = value;
