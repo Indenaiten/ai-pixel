@@ -1,5 +1,7 @@
 package com.aipixel.api.common.manager.file;
 
+import com.aipixel.api.common.properties.ImagesProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,7 @@ import java.nio.file.Paths;
 @Component
 public class FileManagerImpl implements FileManager{
 
-    private final String directory;
+    private final ImagesProperties imagesProperties;
 
 
 
@@ -25,10 +27,16 @@ public class FileManagerImpl implements FileManager{
 // ---| CONSTRUCTOR |------------------------------------------------------------------------------------------------ \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
+    /**
+     * Constructor al que se le inyectan las dependencias necesarias.
+     *
+     * @param imagesProperties Las propiedades de las imágenes.
+     */
+    @Autowired
     public FileManagerImpl(
-            @Value( "${manager.file.directory}" ) final String directory
+            final ImagesProperties imagesProperties
     ) {
-        this.directory = directory;
+        this.imagesProperties = imagesProperties;
     }
 
 
@@ -39,7 +47,7 @@ public class FileManagerImpl implements FileManager{
 
     @Override
     public File saveFile( final String fileName, final String contentTpe, final byte[] fileContent ) throws IOException {
-        final Path path = Paths.get( this.directory, fileName );
+        final Path path = Paths.get( this.imagesProperties.getImagesDirectory(), fileName );
         Files.createDirectories( path.getParent() );
         Files.write( path, fileContent );
         return path.toAbsolutePath().toFile();

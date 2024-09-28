@@ -30,6 +30,13 @@ services:
       DATABASE_URL: jdbc:mysql://database:3306/aipixel-db?allowPublicKeyRetrieval=true
       DATABASE_USER: aipixel.user
       DATABASE_PASSWORD: aipixel.pass
+      RESOURCES_PATHS: "'file:./public/'"
+      IMAGES_DIRECTORY: ./public/resources/images
+      IMAGES_URL: /api/v1/resources/images
+      CORS_ALLOWED_ORIGINS: http://localhost:63343
+      CORS_ALLOWED_METHODS: "GET, POST, PUT, DELETE, OPTIONS"
+      CORS_ALLOWED_HEADERS: "*"
+      CORS_ALLOW_CREDENTIALS: true
     working_dir: /app
     command: >
       sh -c "echo 'Building the application...'
