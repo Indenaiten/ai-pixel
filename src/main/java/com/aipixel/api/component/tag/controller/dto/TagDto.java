@@ -4,7 +4,7 @@ import com.aipixel.api.common.controller.DTO;
 import com.aipixel.api.component.tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.util.Optional;
@@ -16,9 +16,9 @@ import java.util.Optional;
  *
  * @See DTO
  */
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class TagDto implements DTO {
 
     @Serial
@@ -37,20 +37,22 @@ public class TagDto implements DTO {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    public Optional<Long> getId() {
-        return Optional.ofNullable( this.id );
-    }
-
-    public Optional<String> getName() {
-        return Optional.ofNullable( this.name );
-    }
-
     public Optional<String> getCreatedAt() {
         return Optional.ofNullable( this.createdAt );
     }
 
     public Optional<String> getUpdatedAt() {
         return Optional.ofNullable( this.updatedAt );
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static TagDtoBuilder builder( final Long id, final String name ) {
+        return new TagDtoBuilder().id( id ).name( name );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

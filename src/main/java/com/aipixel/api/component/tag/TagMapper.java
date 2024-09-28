@@ -30,10 +30,8 @@ public class TagMapper {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static TagDto entityToTagDto( final Tag entity ) {
-        final TagDto.TagDtoBuilder builder = TagDto.builder();
+        final TagDto.TagDtoBuilder builder = TagDto.builder( entity.getId().value(), entity.getName().value() );
 
-        entity.getId().ifPresent( value -> builder.id( value.value() ));
-        entity.getName().ifPresent( value -> builder.name( value.toString() ));
         entity.getCreatedAt().ifPresent( value -> builder.createdAt( value.format( LocalDateTimeFormatter.FULL_DATE_TIME_FORMATTER)));
         entity.getUpdatedAt().ifPresent( value -> builder.updatedAt( value.format( LocalDateTimeFormatter.FULL_DATE_TIME_FORMATTER)));
 
@@ -42,10 +40,8 @@ public class TagMapper {
 
 
     public static TagModel entityToModel( final Tag entity ) {
-        final TagModel.TagModelBuilder builder = TagModel.builder();
+        final TagModel.TagModelBuilder builder = TagModel.builder( entity.getId().value(), entity.getName().value() );
 
-        entity.getId().ifPresent( value -> builder.id( value.value() ));
-        entity.getName().ifPresent( value -> builder.name( value.toString() ));
         entity.getCreatedAt().ifPresent( value -> builder.createdAt( Timestamp.valueOf( value )));
         entity.getUpdatedAt().ifPresent( value -> builder.updatedAt( Timestamp.valueOf( value )));
 
@@ -54,10 +50,8 @@ public class TagMapper {
 
 
     public static Tag modelToEntity( final TagModel model ){
-        final Tag.TagBuilder builder = Tag.builder();
+        final Tag.TagBuilder builder = Tag.builder( TagId.of( model.getId()), TagName.of( model.getName() ));
 
-        model.getId().ifPresent( value -> builder.id( TagId.of( value )));
-        model.getName().ifPresent( value -> builder.name( TagName.of( value )));
         model.getCreatedAt().ifPresent( value -> builder.createdAt( value.toLocalDateTime() ));
         model.getUpdatedAt().ifPresent( value -> builder.updatedAt( value.toLocalDateTime() ));
 

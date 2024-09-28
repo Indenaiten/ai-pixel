@@ -16,9 +16,9 @@ import java.util.Optional;
  *
  * @see Entity
  */
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Tag implements Entity {
 
     @Serial
@@ -26,8 +26,8 @@ public class Tag implements Entity {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    private TagId id;
-    private TagName name;
+    private final TagId id;
+    private final TagName name;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -56,20 +56,22 @@ public class Tag implements Entity {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    public Optional<TagId> getId() {
-        return Optional.ofNullable( this.id );
-    }
-
-    public Optional<TagName> getName() {
-        return Optional.ofNullable( this.name );
-    }
-
     public Optional<LocalDateTime> getCreatedAt() {
         return Optional.ofNullable( this.createdAt );
     }
 
     public Optional<LocalDateTime> getUpdatedAt() {
         return Optional.ofNullable( this.updatedAt );
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static TagBuilder builder( final TagId id, final TagName name ) {
+        return new TagBuilder().id( id ).name( name );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
