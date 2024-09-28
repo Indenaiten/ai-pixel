@@ -9,7 +9,7 @@ import com.aipixel.api.component.tag.vo.TagId;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -25,10 +25,10 @@ import java.util.Set;
  *
  * @See ServiceRequest
  */
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class SaveImageRequest implements ServiceRequest {
+public class SaveImageServiceRequest implements ServiceRequest {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -36,23 +36,23 @@ public class SaveImageRequest implements ServiceRequest {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     @NotNull( message = "El nombre de la imagen es requerido" )
-    private ImageName name;
+    private final ImageName name;
 
     @NotNull( message = "El nombre del archivo de la imagen es requerido" )
-    private String fileName;
+    private final String fileName;
 
     @NotNull( message = "El contenido de la imagen es requerido" )
-    private byte[] fileContent;
+    private final byte[] fileContent;
 
     @NotNull( message = "El tipo de contenido de la imagen es requerido" )
-    private String fileContentType;
+    private final String fileContentType;
 
-    private Boolean favorite = false;
+    private boolean favorite;
     private LocalDate date;
     private ImageDescription description;
     private ImageValoration imageValoration;
-    private Set<CategoryId> categories = Collections.emptySet();
-    private Set<TagId> tags = Collections.emptySet();
+    private Set<CategoryId> categories;
+    private Set<TagId> tags;
 
 
 
@@ -60,28 +60,8 @@ public class SaveImageRequest implements ServiceRequest {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    public Boolean isFavorite() {
-        return this.favorite != null && this.favorite;
-    }
-
     public Optional<LocalDate> getDate() {
         return Optional.ofNullable( this.date );
-    }
-
-    public ImageName getName() {
-        return this.name;
-    }
-
-    public String getFileName() {
-        return this.fileName;
-    }
-
-    public byte[] getFileContent() {
-        return this.fileContent;
-    }
-
-    public String getFileContentType() {
-        return this.fileContentType;
     }
 
     public Optional<ImageDescription> getDescription() {
@@ -92,12 +72,23 @@ public class SaveImageRequest implements ServiceRequest {
         return Optional.ofNullable( this.imageValoration );
     }
 
-    public List<CategoryId> getCategories() {
-        return this.categories != null ? List.copyOf( categories ) : Collections.emptyList();
-    }
 
-    public List<TagId> getTags() {
-        return this.tags != null ? List.copyOf( tags ) : Collections.emptyList();
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static SaveImageServiceRequestBuilder builder(
+            final ImageName name,
+            final String fileName,
+            final byte[] fileContent,
+            final String fileContentType
+    ) {
+        return new SaveImageServiceRequestBuilder()
+                .name( name )
+                .fileName( fileName )
+                .fileContent( fileContent )
+                .fileContentType( fileContentType );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

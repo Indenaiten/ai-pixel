@@ -8,7 +8,7 @@ import com.aipixel.api.component.image.ImageRestController;
 import com.aipixel.api.component.image.ImageService;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
 import com.aipixel.api.component.image.controller.form.SaveImageForm;
-import com.aipixel.api.component.image.service.request.SaveImageRequest;
+import com.aipixel.api.component.image.service.request.SaveImageServiceRequest;
 import com.aipixel.api.component.image.vo.ImageId;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,7 +79,7 @@ public class ImageRestControllerImpl implements ImageRestController {
     @SneakyThrows
     @Override
     public ApiResponse<String> save( final SaveImageForm data ) {
-        final SaveImageRequest request = ImageMapper.formToSaveImageRequest( data );
+        final SaveImageServiceRequest request = ImageMapper.formToSaveImageServiceRequest( data );
         final ImageId result = this.imageService.saveImage( request );
         return ApiResponse.success().build( result.toString() );
     }

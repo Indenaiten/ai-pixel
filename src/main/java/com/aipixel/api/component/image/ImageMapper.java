@@ -6,7 +6,7 @@ import com.aipixel.api.component.category.vo.CategoryId;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
 import com.aipixel.api.component.image.controller.form.SaveImageForm;
 import com.aipixel.api.component.image.repository.ImageModel;
-import com.aipixel.api.component.image.service.request.SaveImageRequest;
+import com.aipixel.api.component.image.service.request.SaveImageServiceRequest;
 import com.aipixel.api.component.image.vo.*;
 import com.aipixel.api.component.tag.TagMapper;
 import com.aipixel.api.component.tag.vo.TagId;
@@ -40,38 +40,30 @@ public class ImageMapper {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     @SneakyThrows
-    public static SaveImageRequest formToSaveImageRequest( final SaveImageForm form ) {
-        final SaveImageRequest.SaveImageRequestBuilder builder = SaveImageRequest.builder();
-
-        builder.favorite( form.isFavorite() );
-        builder.name( ImageName.of( form.getName() ));
-        builder.categories( form.getCategories().stream().map( CategoryId::of ).collect( Collectors.toSet() ));
-        builder.tags( form.getTags().stream().map( TagId::of ).collect( Collectors.toSet() ));
+    public static SaveImageServiceRequest formToSaveImageServiceRequest( final SaveImageForm form ) {
+        final MultipartFile image = form.getImage();
+        final SaveImageServiceRequest.SaveImageServiceRequestBuilder builder = SaveImageServiceRequest
+                .builder( ImageName.of( form.getName() ), image.getOriginalFilename(), image.getBytes(), image.getContentType() )
+                .favorite( form.isFavorite() )
+                .categories( form.getCategories().stream().map( CategoryId::of ).collect( Collectors.toSet() ))
+                .tags( form.getTags().stream().map( TagId::of ).collect( Collectors.toSet() ));
 
         form.getDate().ifPresent( value -> builder.date(LocalDate.parse( value, LocalDateTimeFormatter.FULL_DATE_FORMATTER )));
         form.getDescription().ifPresent( value -> builder.description( ImageDescription.of( value )));
         form.getValoration().ifPresent( value -> builder.imageValoration( ImageValoration.of( value )));
-
-        final MultipartFile image = form.getImage();
-        builder.fileName( image.getOriginalFilename() );
-        builder.fileContentType( image.getContentType() );
-        builder.fileContent( image.getBytes() );
 
         return builder.build();
     }
 
 
     public static ImageDto entityToImageDto( final Image image ) {
-        final ImageDto.ImageDtoBuilder builder = ImageDto.builder();
+        final ImageDto.ImageDtoBuilder builder = ImageDto
+                .builder( image.getId().toString(), image.getName().value(), image.getFileName().getNameValue() )
+                .favorite( image.isFavorite() )
+                .categories( image.getCategories().stream().map( CategoryMapper::entityToCategoryDto ).toList() )
+                .tags( image.getTags().stream().map( TagMapper::entityToTagDto ).toList() );
 
-        builder.favorite( image.isFavorite() );
-        builder.categories( image.getCategories().stream().map( CategoryMapper::entityToCategoryDto ).toList() );
-        builder.tags( image.getTags().stream().map( TagMapper::entityToTagDto ).toList() );
-
-        image.getId().ifPresent( value -> builder.id( value.toString() ));
         image.getDate().ifPresent( value -> builder.date( value.format( LocalDateTimeFormatter.FULL_DATE_FORMATTER )));
-        image.getName().ifPresent( value -> builder.name( value.toString() ));
-        image.getFileName().ifPresent( value -> builder.fileName( value.getNameValue() ));
         image.getDescription().ifPresent( value -> builder.description( value.toString() ));
         image.getImageValoration().ifPresent( value -> builder.valoration( value.value() ));
         image.getCreatedAt().ifPresent( value -> builder.createdAt( value.format( LocalDateTimeFormatter.FULL_DATE_TIME_FORMATTER )));
@@ -82,16 +74,13 @@ public class ImageMapper {
 
 
     public static ImageModel entityToModel( final Image entity ) {
-        final ImageModel.ImageModelBuilder builder = ImageModel.builder();
+        final ImageModel.ImageModelBuilder builder = ImageModel
+                .builder( entity.getId().toString(), entity.getName().value(), entity.getFileName().getNameValue() )
+                .favorite( entity.isFavorite() )
+                .categories( entity.getCategories().stream().map( CategoryMapper::entityToModel ).toList() )
+                .tags( entity.getTags().stream().map( TagMapper::entityToModel ).toList() );
 
-        builder.favorite( entity.isFavorite() );
-        builder.categories( entity.getCategories().stream().map( CategoryMapper::entityToModel ).toList() );
-        builder.tags( entity.getTags().stream().map( TagMapper::entityToModel ).toList() );
-
-        entity.getId().ifPresent( value -> builder.id( value.toString() ));
         entity.getDate().ifPresent( value -> builder.date( new Date( value.toEpochDay() )));
-        entity.getName().ifPresent( value -> builder.name( value.toString() ));
-        entity.getFileName().ifPresent( value -> builder.fileName( value.getNameValue() ));
         entity.getDescription().ifPresent( value -> builder.description( value.toString() ));
         entity.getImageValoration().ifPresent( value -> builder.valoration( value.value() ));
         entity.getCreatedAt().ifPresent( value -> builder.createdAt( Timestamp.valueOf( value )));
@@ -102,16 +91,13 @@ public class ImageMapper {
 
 
     public static Image modelToEntity( final ImageModel model ){
-        final Image.ImageBuilder builder = Image.builder();
+        final Image.ImageBuilder builder = Image
+                .builder( ImageId.of( model.getId()), ImageName.of( model.getName()), ImageFileName.of( model.getFileName() ))
+                .favorite( model.isFavorite() )
+                .categories( model.getCategories().stream().map( CategoryMapper::modelToEntity ).collect( Collectors.toSet() ))
+                .tags( model.getTags().stream().map( TagMapper::modelToEntity ).collect( Collectors.toSet() ));
 
-        builder.favorite( model.isFavorite() );
-        builder.categories( model.getCategories().stream().map( CategoryMapper::modelToEntity ).collect( Collectors.toSet() ));
-        builder.tags( model.getTags().stream().map( TagMapper::modelToEntity ).collect( Collectors.toSet() ));
-
-        model.getId().ifPresent( value -> builder.id( ImageId.of( value )));
         model.getDate().ifPresent( value -> builder.date( value.toLocalDate() ));
-        model.getName().ifPresent( value -> builder.name( ImageName.of( value )));
-        model.getFileName().ifPresent( value -> builder.fileName( ImageFileName.of( value )));
         model.getDescription().ifPresent( value -> builder.description( ImageDescription.of( value )));
         model.getValoration().ifPresent( value -> builder.imageValoration( ImageValoration.of( value )));
 

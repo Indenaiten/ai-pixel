@@ -7,7 +7,7 @@ import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.image.ImageRepository;
 import com.aipixel.api.component.image.ImageService;
 import com.aipixel.api.component.image.exception.ImageNotFoundException;
-import com.aipixel.api.component.image.service.request.SaveImageRequest;
+import com.aipixel.api.component.image.service.request.SaveImageServiceRequest;
 import com.aipixel.api.component.image.vo.ImageFileName;
 import com.aipixel.api.component.image.vo.ImageId;
 import com.aipixel.api.component.tag.Tag;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-
+import java.util.stream.Collectors;
 
 
 /**
@@ -82,21 +82,10 @@ public class ImageServiceImpl implements ImageService {
 
     @SneakyThrows
     @Override
-    public ImageId saveImage( final SaveImageRequest request ) {
+    public ImageId saveImage( final SaveImageServiceRequest request ) {
         final ImageId id = ImageId.random();
-        final Image.ImageBuilder imageBuilder = Image.builder();
-        final Set<Category> categories = Set.copyOf( this.categoryRepository.findAllById( request.getCategories() ));
-        final Set<Tag> tags = Set.copyOf( this.tagRepository.findAllById( request.getTags() ));
-
-        imageBuilder.id( id );
-        imageBuilder.favorite( request.isFavorite() );
-        imageBuilder.name( request.getName() );
-        imageBuilder.categories( categories );
-        imageBuilder.tags( tags );
-
-        request.getDate().ifPresent( imageBuilder::date );
-        request.getDescription().ifPresent( imageBuilder::description );
-        request.getImageValoration().ifPresent( imageBuilder::imageValoration );
+        final List<Category> categories = this.categoryRepository.findAllById( request.getCategories().stream().toList());
+        final List<Tag> tags = this.tagRepository.findAllById( request.getTags().stream().toList() );
 
         final String fileName = request.getFileName();
         final byte[] fileContent = request.getFileContent();
@@ -107,9 +96,17 @@ public class ImageServiceImpl implements ImageService {
         final String newFileName = String.format( "%s.%s", id, extensionFile );
 
         final File file = this.fileManager.saveFile( newFileName, fileContentType, fileContent );
-        imageBuilder.fileName( ImageFileName.of( file ));
+
+        final Image.ImageBuilder imageBuilder = Image.builder( id, request.getName(), ImageFileName.of( file ))
+                .favorite( request.isFavorite() )
+                .categories( Set.copyOf( categories ))
+                .tags( Set.copyOf( tags ));
+        request.getDate().ifPresent( imageBuilder::date );
+        request.getDescription().ifPresent( imageBuilder::description );
+        request.getImageValoration().ifPresent( imageBuilder::imageValoration );
 
         this.imageRepository.save( imageBuilder.build() );
+
         return id;
     }
 

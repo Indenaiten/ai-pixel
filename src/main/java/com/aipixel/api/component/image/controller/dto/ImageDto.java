@@ -1,7 +1,6 @@
 package com.aipixel.api.component.image.controller.dto;
 
 import com.aipixel.api.common.controller.DTO;
-import com.aipixel.api.common.properties.ApplicationProperties;
 import com.aipixel.api.component.category.controller.dto.CategoryDto;
 import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.tag.controller.dto.TagDto;
@@ -14,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -24,7 +24,6 @@ import java.util.List;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class ImageDto implements DTO {
 
     @Serial
@@ -32,11 +31,11 @@ public class ImageDto implements DTO {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    private String id;
-    private Boolean favorite;
+    private final String id;
+    private boolean favorite;
     private String date;
-    private String name;
-    private String fileName;
+    private final String name;
+    private final String fileName;
     private String description;
     private Short valoration;
     private List<CategoryDto> categories;
@@ -50,14 +49,34 @@ public class ImageDto implements DTO {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    @JsonProperty( "categories" )
-    public List<CategoryDto> getCategories(){
-        return this.categories != null ? List.copyOf( this.categories ) : Collections.emptyList();
+    public Optional<String> getDate() {
+        return Optional.ofNullable( this.date );
     }
 
-    @JsonProperty( "tags" )
-    public List<TagDto> getTags(){
-        return this.tags != null ? List.copyOf( this.tags ) : Collections.emptyList();
+    public Optional<String> getDescription() {
+        return Optional.ofNullable( this.description );
+    }
+
+    public Optional<Short> getValoration() {
+        return Optional.ofNullable( this.valoration );
+    }
+
+    public Optional<String> getCreatedAt() {
+        return Optional.ofNullable( this.createdAt );
+    }
+
+    public Optional<String> getUpdatedAt() {
+        return Optional.ofNullable( this.updatedAt );
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static ImageDtoBuilder builder( final String id, final String name, final String fileName ) {
+        return new ImageDtoBuilder().id( id ).name( name ).fileName( fileName );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

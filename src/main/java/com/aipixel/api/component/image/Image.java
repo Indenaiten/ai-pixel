@@ -6,7 +6,7 @@ import com.aipixel.api.component.image.vo.*;
 import com.aipixel.api.component.tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.time.LocalDate;
@@ -20,9 +20,9 @@ import java.util.*;
  *
  * @see Entity
  */
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Image implements Entity {
 
     @Serial
@@ -30,11 +30,11 @@ public class Image implements Entity {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    private ImageId id;
-    private Boolean favorite;
+    private final ImageId id;
+    private boolean favorite;
     private LocalDate date;
-    private ImageName name;
-    private ImageFileName fileName;
+    private final ImageName name;
+    private final ImageFileName fileName;
     private ImageDescription description;
     private ImageValoration imageValoration;
     private Set<Category> categories;
@@ -67,24 +67,8 @@ public class Image implements Entity {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    public Optional<ImageId> getId() {
-        return Optional.ofNullable( this.id );
-    }
-
-    public Boolean isFavorite() {
-        return this.favorite != null && this.favorite;
-    }
-
     public Optional<LocalDate> getDate() {
         return Optional.ofNullable( this.date );
-    }
-
-    public Optional<ImageName> getName() {
-        return Optional.ofNullable( this.name );
-    }
-
-    public Optional<ImageFileName> getFileName() {
-        return Optional.ofNullable( this.fileName );
     }
 
     public Optional<ImageDescription> getDescription() {
@@ -95,20 +79,22 @@ public class Image implements Entity {
         return Optional.ofNullable( this.imageValoration );
     }
 
-    public List<Category> getCategories(){
-        return this.categories != null ? List.copyOf( this.categories ) : Collections.emptyList();
-    }
-
-    public List<Tag> getTags(){
-        return this.tags != null ? List.copyOf( this.tags ) : Collections.emptyList();
-    }
-
     public Optional<LocalDateTime> getCreatedAt() {
         return Optional.ofNullable( this.createdAt );
     }
 
     public Optional<LocalDateTime> getUpdatedAt() {
         return Optional.ofNullable( this.updatedAt );
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static ImageBuilder builder( final ImageId id, final ImageName name, final ImageFileName fileName ){
+        return new ImageBuilder().id( id ).name( name ).fileName( fileName );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
