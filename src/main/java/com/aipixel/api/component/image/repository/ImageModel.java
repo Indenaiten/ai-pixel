@@ -6,10 +6,7 @@ import com.aipixel.api.component.image.vo.ImageName;
 import com.aipixel.api.component.image.vo.ImageValoration;
 import com.aipixel.api.component.tag.repository.TagModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -37,7 +34,8 @@ public class ImageModel {
 
 
     @Column( name = "favorite", nullable = false )
-    private boolean favorite;
+    @Getter( AccessLevel.NONE )
+    private Boolean favorite;
     public static final String FIELD_FAVORITE = "favorite";
 
 
@@ -102,6 +100,10 @@ public class ImageModel {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
+
+    public boolean isFavorite(){
+        return this.favorite != null && this.favorite;
+    }
 
     public Optional<Date> getDate(){
         return Optional.ofNullable( this.date );

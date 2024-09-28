@@ -5,10 +5,7 @@ import com.aipixel.api.component.category.controller.dto.CategoryDto;
 import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.tag.controller.dto.TagDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.util.Collections;
@@ -32,7 +29,10 @@ public class ImageDto implements DTO {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     private final String id;
-    private boolean favorite;
+
+    @Getter( AccessLevel.NONE )
+    private Boolean favorite;
+
     private String date;
     private final String name;
     private final String fileName;
@@ -49,6 +49,10 @@ public class ImageDto implements DTO {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
+    public boolean isFavorite() {
+        return this.favorite != null && this.favorite;
+    }
+    
     public Optional<String> getDate() {
         return Optional.ofNullable( this.date );
     }

@@ -4,6 +4,7 @@ import com.aipixel.api.common.entity.Entity;
 import com.aipixel.api.component.category.Category;
 import com.aipixel.api.component.image.vo.*;
 import com.aipixel.api.component.tag.Tag;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,10 @@ public class Image implements Entity {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     private final ImageId id;
-    private boolean favorite;
+
+    @Getter( AccessLevel.NONE )
+    private Boolean favorite;
+
     private LocalDate date;
     private final ImageName name;
     private final ImageFileName fileName;
@@ -66,6 +70,10 @@ public class Image implements Entity {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
+
+    public boolean isFavorite() {
+        return this.favorite != null && this.favorite;
+    }
 
     public Optional<LocalDate> getDate() {
         return Optional.ofNullable( this.date );

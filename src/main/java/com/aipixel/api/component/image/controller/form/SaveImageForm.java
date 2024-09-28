@@ -3,10 +3,7 @@ package com.aipixel.api.component.image.controller.form;
 import com.aipixel.api.common.controller.Form;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serial;
@@ -38,7 +35,9 @@ public class SaveImageForm implements Form {
     @NotNull( message = "La imagen es requerida" )
     private final transient MultipartFile image;
 
-    private boolean favorite;
+    @Getter( AccessLevel.NONE )
+    private Boolean favorite;
+
     private String date;
     private String description;
     private Short valoration;
@@ -51,6 +50,10 @@ public class SaveImageForm implements Form {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
+    public boolean isFavorite() {
+        return this.favorite != null && this.favorite;
+    }
+
     public Optional<String> getDate() {
         return Optional.ofNullable( this.date );
     }
@@ -61,6 +64,14 @@ public class SaveImageForm implements Form {
 
     public Optional<Short> getValoration(){
         return Optional.ofNullable( this.valoration );
+    }
+
+    public List<Long> getCategories() {
+        return Optional.ofNullable( this.categories ).orElse( Collections.emptyList() );
+    }
+
+    public List<Long> getTags() {
+        return Optional.ofNullable( this.tags ).orElse( Collections.emptyList() );
     }
 
 

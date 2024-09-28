@@ -7,6 +7,7 @@ import com.aipixel.api.component.image.vo.ImageName;
 import com.aipixel.api.component.image.vo.ImageValoration;
 import com.aipixel.api.component.tag.vo.TagId;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,7 +48,9 @@ public class SaveImageServiceRequest implements ServiceRequest {
     @NotNull( message = "El tipo de contenido de la imagen es requerido" )
     private final String fileContentType;
 
-    private boolean favorite;
+    @Getter( AccessLevel.NONE )
+    private Boolean favorite;
+
     private LocalDate date;
     private ImageDescription description;
     private ImageValoration imageValoration;
@@ -59,6 +62,10 @@ public class SaveImageServiceRequest implements ServiceRequest {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
+
+    public boolean isFavorite() {
+        return this.favorite != null && this.favorite;
+    }
 
     public Optional<LocalDate> getDate() {
         return Optional.ofNullable( this.date );
