@@ -31,10 +31,9 @@ public class CategoryMapper {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static CategoryDto entityToCategoryDto( final Category entity ) {
-        final CategoryDto.CategoryDtoBuilder builder = CategoryDto.builder();
+        final CategoryDto.CategoryDtoBuilder builder = CategoryDto
+                .builder( entity.getId().value(), entity.getName().value() );
 
-        entity.getId().ifPresent( value -> builder.id( value.value() ));
-        entity.getName().ifPresent( value -> builder.name( value.toString() ));
         entity.getDescription().ifPresent( value -> builder.description( value.toString() ));
         entity.getCreatedAt().ifPresent( value -> builder.createdAt( value.format( LocalDateTimeFormatter.FULL_DATE_TIME_FORMATTER )));
         entity.getUpdatedAt().ifPresent( value -> builder.updatedAt( value.format( LocalDateTimeFormatter.FULL_DATE_TIME_FORMATTER )));
@@ -44,10 +43,9 @@ public class CategoryMapper {
 
 
     public static CategoryModel entityToModel( final Category entity ) {
-        final CategoryModel.CategoryModelBuilder builder = CategoryModel.builder();
+        final CategoryModel.CategoryModelBuilder builder = CategoryModel
+                .builder( entity.getId().value(), entity.getName().value() );
 
-        entity.getId().ifPresent( value -> builder.id( value.value() ));
-        entity.getName().ifPresent( value -> builder.name( value.toString() ));
         entity.getDescription().ifPresent( value -> builder.description( value.toString() ));
         entity.getCreatedAt().ifPresent( value -> builder.createdAt( Timestamp.valueOf( value )));
         entity.getUpdatedAt().ifPresent( value -> builder.updatedAt( Timestamp.valueOf( value )));
@@ -57,10 +55,9 @@ public class CategoryMapper {
 
 
     public static Category modelToEntity( final CategoryModel model ){
-        final Category.CategoryBuilder builder = Category.builder();
+        final Category.CategoryBuilder builder = Category
+                .builder( CategoryId.of( model.getId()), CategoryName.of( model.getName() ));
 
-        model.getId().ifPresent( value -> builder.id( CategoryId.of( value )));
-        model.getName().ifPresent( value -> builder.name( CategoryName.of( value )));
         model.getDescription().ifPresent( value -> builder.description( CategoryDescription.of( value )));
         model.getCreatedAt().ifPresent( value -> builder.createdAt( value.toLocalDateTime() ));
         model.getUpdatedAt().ifPresent( value -> builder.updatedAt( value.toLocalDateTime() ));

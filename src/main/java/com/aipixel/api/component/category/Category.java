@@ -6,6 +6,7 @@ import com.aipixel.api.component.category.vo.CategoryId;
 import com.aipixel.api.component.category.vo.CategoryName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
@@ -20,9 +21,9 @@ import java.util.Optional;
  *
  * @see Entity
  */
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Category implements Entity {
 
     @Serial
@@ -30,8 +31,8 @@ public class Category implements Entity {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    private CategoryId id;
-    private CategoryName name;
+    private final CategoryId id;
+    private final CategoryName name;
     private CategoryDescription description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -61,14 +62,6 @@ public class Category implements Entity {
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    public Optional<CategoryId> getId() {
-        return Optional.ofNullable( this.id );
-    }
-
-    public Optional<CategoryName> getName() {
-        return Optional.ofNullable( this.name );
-    }
-
     public Optional<CategoryDescription> getDescription() {
         return Optional.ofNullable( this.description );
     }
@@ -79,6 +72,16 @@ public class Category implements Entity {
 
     public Optional<LocalDateTime> getUpdatedAt() {
         return Optional.ofNullable( this.updatedAt );
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static CategoryBuilder builder( final CategoryId id, final CategoryName name ) {
+        return new CategoryBuilder().id( id ).name( name );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

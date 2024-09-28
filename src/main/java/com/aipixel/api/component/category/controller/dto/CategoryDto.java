@@ -4,6 +4,7 @@ import com.aipixel.api.common.controller.DTO;
 import com.aipixel.api.component.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
@@ -15,9 +16,9 @@ import java.util.Optional;
  *
  * @See DTO
  */
+@Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class CategoryDto implements DTO {
 
     @Serial
@@ -25,8 +26,8 @@ public class CategoryDto implements DTO {
 
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    private long id;
-    private String name;
+    private final long id;
+    private final String name;
     private String description;
     private String createdAt;
     private String updatedAt;
@@ -36,14 +37,6 @@ public class CategoryDto implements DTO {
 // ------------------------------------------------------------------------------------------------------------------ \\
 // ---| GETTERS |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
-
-    public Optional<Long> getId() {
-        return Optional.ofNullable( this.id );
-    }
-
-    public Optional<String> getName() {
-        return Optional.ofNullable( this.name );
-    }
 
     public Optional<String> getDescription() {
         return Optional.ofNullable( this.description );
@@ -55,6 +48,16 @@ public class CategoryDto implements DTO {
 
     public Optional<String> getUpdatedAt() {
         return Optional.ofNullable( this.updatedAt );
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    public static CategoryDtoBuilder builder( final long id, final String name ) {
+        return new CategoryDtoBuilder().id( id ).name( name );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
