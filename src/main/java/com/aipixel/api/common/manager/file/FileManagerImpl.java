@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.Optional;
 
 
 /**
@@ -53,6 +53,26 @@ public class FileManagerImpl implements FileManager{
         return path.toAbsolutePath().toFile();
     }
 
-// ------------------------------------------------------------------------------------------------------------------ \\
+
+    @Override
+    public Optional<String> getExtension( final String fileName ) {
+        Optional<String> result = Optional.empty();
+
+        final int index = fileName.lastIndexOf( '.' );
+        if (index > 0 && index < fileName.length() - 1) {
+            result = Optional.of( fileName.substring( index + 1 ));
+        }
+
+        return result;
+    }
+
+
+    @Override
+    public Optional<String> getExtension( final File file ) {
+        return this.getExtension( file.getName() );
+    }
+
+
+    // ------------------------------------------------------------------------------------------------------------------ \\
 
 }
