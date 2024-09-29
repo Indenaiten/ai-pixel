@@ -1,6 +1,7 @@
 package com.aipixel.api.component.image.service;
 
 import com.aipixel.api.common.manager.file.FileManager;
+import com.aipixel.api.common.properties.ImagesProperties;
 import com.aipixel.api.component.category.Category;
 import com.aipixel.api.component.category.CategoryRepository;
 import com.aipixel.api.component.image.Image;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -26,6 +28,7 @@ import java.util.Set;
 @Service
 public class ImageServiceImpl implements ImageService {
 
+    private final ImagesProperties imagesProperties;
     private final FileManager fileManager;
     private final ImageRepository imageRepository;
     private final CategoryRepository categoryRepository;
@@ -40,6 +43,7 @@ public class ImageServiceImpl implements ImageService {
     /**
      * Constructor al que se le inyectan las dependencias necesarias.
      *
+     * @param imagesProperties Las propiedades de las imágenes.
      * @param fileManager El gestor de archivos.
      * @param imageRepository El repositorio de imágenes.
      * @param categoryRepository El repositorio de categorías.
@@ -47,11 +51,13 @@ public class ImageServiceImpl implements ImageService {
      */
     @Autowired
     public ImageServiceImpl(
+            final ImagesProperties imagesProperties,
             final FileManager fileManager,
             final ImageRepository imageRepository,
             final CategoryRepository categoryRepository,
             final TagRepository tagRepository
     ) {
+        this.imagesProperties = imagesProperties;
         this.fileManager = fileManager;
         this.imageRepository = imageRepository;
         this.categoryRepository = categoryRepository;
@@ -65,8 +71,9 @@ public class ImageServiceImpl implements ImageService {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     @Override
-    public List<Image> findAll() {
-        return this.imageRepository.findAll();
+    public List<Image> findAll( final ImageId lastId, Integer limit ) throws ImageNotFoundException {
+        limit = Optional.ofNullable( limit ).orElse( this.imagesProperties.getDefaultLimit() );
+        return this.imageRepository.findAll( lastId, limit );
     }
 
 

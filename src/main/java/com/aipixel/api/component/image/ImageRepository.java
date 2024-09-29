@@ -1,5 +1,6 @@
 package com.aipixel.api.component.image;
 
+import com.aipixel.api.component.image.exception.ImageNotFoundException;
 import com.aipixel.api.component.image.vo.ImageId;
 
 import java.util.List;
@@ -13,11 +14,18 @@ import java.util.Optional;
 public interface ImageRepository {
 
     /**
-     * Busca y recupera todas las imágenes.
+     * Busca y recupera todas las imágenes en función de los parámetros de paginación.
      *
-     * @return Una {@link List} de tipo {@link Image} con todas las imágenes.
+     * @param lastId El identificador de la última imagen recuperada. Si es {@code null}, se recuperarán las primeras
+     *               imágenes.
+     * @param limit El límite de imágenes a recuperar.
+     *
+     * @return Una {@link List} de tipo {@link Image} con todas las imágenes encontradas en función de los parámetros de
+     * paginación.
+     *
+     * @throws ImageNotFoundException Si no se encuentra la imagen a partir del identificador proporcionado.
      */
-    List<Image> findAll();
+    List<Image> findAll( ImageId lastId, int limit ) throws ImageNotFoundException;
 
 
     /**

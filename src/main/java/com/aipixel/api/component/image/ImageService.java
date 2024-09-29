@@ -18,11 +18,16 @@ public interface ImageService {
 
 
     /**
-     * Busca y recupera todas las imágenes.
+     * Busca y recupera todas las imágenes a partir de los parámetros de paginación.
      *
-     * @return Una {@link List} de tipo {@link Image} con todas las imágenes.
+     * @param lastId El identificador de la última imagen recuperada. Si es {@code null}, se recuperarán las primeras
+     *               imágenes.
+     * @param limit El límite de imágenes a recuperar. Si es {@code null}, se usará el límite por defecto de la aplicación.
+     *
+     * @return Una {@link List} de tipo {@link Image} con todas las imágenes encontradas en función de los parámetros de
+     * paginación.
      */
-    List<Image> findAll();
+    List<Image> findAll( ImageId lastId, Integer limit ) throws ImageNotFoundException;
 
 
     /**
