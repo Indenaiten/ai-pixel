@@ -71,7 +71,16 @@ public class Tag implements Entity {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static TagBuilder builder( final TagId id, final TagName name ) {
+        if( id == null ) throw new IllegalArgumentException( "El identificador de la etiqueta no puede ser nulo" );
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la etiqueta no puede ser nulo" );
+
         return new TagBuilder().id( id ).name( name );
+    }
+
+    public static TagBuilder create( final TagName name ) {
+        if( name == null ) throw new IllegalArgumentException( "No se puede crear una etiqueta sin nombre" );
+
+        return new TagBuilder().name( name );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

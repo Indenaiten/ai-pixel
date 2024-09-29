@@ -52,6 +52,9 @@ public class TagDto implements DTO {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static TagDtoBuilder builder( final Long id, final String name ) {
+        if( id == null ) throw new IllegalArgumentException( "El identificador de la etiqueta es requerido" );
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la etiqueta es requerido" );
+
         return new TagDtoBuilder().id( id ).name( name );
     }
 
