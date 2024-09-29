@@ -28,10 +28,12 @@ public interface ImageRestController {
     /**
      * Obtiene todas las imágenes como entidades de tipo {@link ImageDto}.
      *
+     * @param lastId El identificador de la última imagen recuperada. Si es {@code null}, se recuperarán las primeras
+     *
      * @return Una {@link ApiResponse} con una {@link List} de tipo {@link ImageDto} con todas las imágenes encontradas.
      */
-    @GetMapping( "/find/all" )
-    ApiResponse<List<ImageDto>> findAll();
+    @GetMapping({"/find/all", "/find/all/{last-id}" })
+    ApiResponse<List<ImageDto>> findAll( @PathVariable( value = "last-id", required = false ) String lastId );
 
 
     /**

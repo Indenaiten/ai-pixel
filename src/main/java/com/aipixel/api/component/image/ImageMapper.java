@@ -102,6 +102,8 @@ public class ImageMapper {
         model.getDate().ifPresent( value -> builder.date( value.toLocalDate() ));
         model.getDescription().ifPresent( value -> builder.description( ImageDescription.of( value )));
         model.getValoration().ifPresent( value -> builder.imageValoration( ImageValoration.of( value )));
+        model.getCreatedAt().ifPresent( value -> builder.createdAt( value.toLocalDateTime() ));
+        model.getUpdatedAt().ifPresent( value -> builder.updatedAt( value.toLocalDateTime() ));
 
         return builder.build();
     }

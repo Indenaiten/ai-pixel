@@ -7,6 +7,7 @@ app:
   images:
     directory: ./public/resources/images
     url:  /api/resources/images
+    default-limit: 2
 
   web:
     cors:

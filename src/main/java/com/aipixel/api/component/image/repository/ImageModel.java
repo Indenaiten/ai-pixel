@@ -117,6 +117,14 @@ public class ImageModel {
         return Optional.ofNullable( this.valoration );
     }
 
+    public Optional<Timestamp> getCreatedAt(){
+        return Optional.ofNullable( this.createdAt );
+    }
+
+    public Optional<Timestamp> getUpdatedAt(){
+        return Optional.ofNullable( this.updatedAt );
+    }
+
 
 
 // ------------------------------------------------------------------------------------------------------------------ \\

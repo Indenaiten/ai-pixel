@@ -19,6 +19,9 @@ public class ImagesProperties extends Properties {
     @Value("${app.images.directory}")
     private String imagesDirectory;
 
+    @Value("${app.images.default-limit}")
+    private Integer defaultLimit;
+
 // ------------------------------------------------------------------------------------------------------------------ \\
 
 }

@@ -5,8 +5,14 @@ import com.aipixel.api.component.image.ImageMapper;
 import com.aipixel.api.component.image.ImageRepository;
 import com.aipixel.api.component.image.vo.ImageId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +49,15 @@ public class ImageRepositoryImpl implements ImageRepository {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     @Override
-    public List<Image> findAll() {
-        return this.imageDao.findAll()
-                .stream().map( ImageMapper::modelToEntity ).toList();
+    public List<Image> findAll( final LocalDateTime createdAt, final int limit ) {
+        final Pageable pageable = this.getPageable( limit );
+        Specification<ImageModel> specification = Specification.where( null );
+        if( createdAt != null ) {
+            final Timestamp timestamp = Timestamp.valueOf( createdAt );
+            specification = ImageSpecificationFactory.getCreatedAtLessThan( timestamp );
+        }
+
+        return this.imageDao.findAll( specification, pageable ).map( ImageMapper::modelToEntity ).stream().toList();
     }
 
 
@@ -58,6 +70,21 @@ public class ImageRepositoryImpl implements ImageRepository {
     @Override
     public void save( final Image image ) {
         this.imageDao.save( ImageMapper.entityToModel( image ));
+    }
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ \\
+// ---| UTILITY METHODS |-------------------------------------------------------------------------------------------- \\
+// ------------------------------------------------------------------------------------------------------------------ \\
+
+    private Pageable getPageable( final int limit ) {
+        final Sort sort = this.getDefaulSort();
+        return PageRequest.of( 0, limit, sort );
+    }
+
+    private Sort getDefaulSort() {
+        return Sort.by( Sort.Order.desc( ImageModel.FIELD_CREATED_AT ));
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
