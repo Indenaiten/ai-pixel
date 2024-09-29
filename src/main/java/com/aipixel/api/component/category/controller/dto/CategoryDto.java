@@ -56,7 +56,10 @@ public class CategoryDto implements DTO {
 // ---| BUILDER |---------------------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-    public static CategoryDtoBuilder builder( final long id, final String name ) {
+    public static CategoryDtoBuilder builder( final Long id, final String name ) {
+        if( id == null ) throw new IllegalArgumentException( "El identificador de la categoría es requerido" );
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la categoría es requerido" );
+
         return new CategoryDtoBuilder().id( id ).name( name );
     }
 

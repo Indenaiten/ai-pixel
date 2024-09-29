@@ -81,7 +81,16 @@ public class Category implements Entity {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static CategoryBuilder builder( final CategoryId id, final CategoryName name ) {
+        if( id == null ) throw new IllegalArgumentException( "El identificador de la categoría no puede ser nulo" );
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la categoría no puede ser nulo" );
+
         return new CategoryBuilder().id( id ).name( name );
+    }
+
+    public static CategoryBuilder create( final CategoryName name ) {
+        if( name == null ) throw new IllegalArgumentException( "No se puede crear una categoría sin nombre" );
+
+        return new CategoryBuilder().name( name );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\
