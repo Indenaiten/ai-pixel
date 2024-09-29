@@ -2,6 +2,7 @@ package com.aipixel.api.component.image.service.request;
 
 import com.aipixel.api.common.service.request.ServiceRequest;
 import com.aipixel.api.component.category.vo.CategoryId;
+import com.aipixel.api.component.image.enumeration.ValidContentType;
 import com.aipixel.api.component.image.vo.ImageDescription;
 import com.aipixel.api.component.image.vo.ImageName;
 import com.aipixel.api.component.image.vo.ImageValoration;
@@ -14,8 +15,6 @@ import lombok.Getter;
 
 import java.io.Serial;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -39,14 +38,11 @@ public class SaveImageServiceRequest implements ServiceRequest {
     @NotNull( message = "El nombre de la imagen es requerido" )
     private final ImageName name;
 
-    @NotNull( message = "El nombre del archivo de la imagen es requerido" )
-    private final String fileName;
-
     @NotNull( message = "El contenido de la imagen es requerido" )
     private final byte[] fileContent;
 
     @NotNull( message = "El tipo de contenido de la imagen es requerido" )
-    private final String fileContentType;
+    private final ValidContentType contentType;
 
     @Getter( AccessLevel.NONE )
     private Boolean favorite;
@@ -87,15 +83,17 @@ public class SaveImageServiceRequest implements ServiceRequest {
 
     public static SaveImageServiceRequestBuilder builder(
             final ImageName name,
-            final String fileName,
             final byte[] fileContent,
-            final String fileContentType
+            final ValidContentType contentType
     ) {
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la imagen es requerido" );
+        if( fileContent == null ) throw new IllegalArgumentException( "El contenido de la imagen es requerido" );
+        if( contentType == null ) throw new IllegalArgumentException( "El tipo de contenido de la imagen es requerido" );
+
         return new SaveImageServiceRequestBuilder()
                 .name( name )
-                .fileName( fileName )
                 .fileContent( fileContent )
-                .fileContentType( fileContentType );
+                .contentType( contentType );
     }
 
 // ------------------------------------------------------------------------------------------------------------------ \\

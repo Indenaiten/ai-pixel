@@ -80,6 +80,10 @@ public class ImageDto implements DTO {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static ImageDtoBuilder builder( final String id, final String name, final String fileName ) {
+        if( id == null ) throw new IllegalArgumentException( "El identificador de la imagen es requerido" );
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la imagen es requerido" );
+        if( fileName == null ) throw new IllegalArgumentException( "El nombre del archivo de la imagen es requerido" );
+
         return new ImageDtoBuilder().id( id ).name( name ).fileName( fileName );
     }
 

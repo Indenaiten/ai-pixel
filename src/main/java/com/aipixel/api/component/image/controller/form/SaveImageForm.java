@@ -81,6 +81,9 @@ public class SaveImageForm implements Form {
 // ------------------------------------------------------------------------------------------------------------------ \\
 
     public static SaveImageFormBuilder builder( final String name, final MultipartFile image ) {
+        if( name == null ) throw new IllegalArgumentException( "El nombre de la imagen es requerido" );
+        if( image == null ) throw new IllegalArgumentException( "La imagen es requerida" );
+
         return new SaveImageFormBuilder().name( name ).image( image );
     }
 

@@ -5,6 +5,7 @@ import com.aipixel.api.component.category.CategoryMapper;
 import com.aipixel.api.component.category.vo.CategoryId;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
 import com.aipixel.api.component.image.controller.form.SaveImageForm;
+import com.aipixel.api.component.image.enumeration.ValidContentType;
 import com.aipixel.api.component.image.repository.ImageModel;
 import com.aipixel.api.component.image.service.request.SaveImageServiceRequest;
 import com.aipixel.api.component.image.vo.*;
@@ -42,8 +43,9 @@ public class ImageMapper {
     @SneakyThrows
     public static SaveImageServiceRequest formToSaveImageServiceRequest( final SaveImageForm form ) {
         final MultipartFile image = form.getImage();
+        final ValidContentType contentType = ValidContentType.of( image.getContentType() );
         final SaveImageServiceRequest.SaveImageServiceRequestBuilder builder = SaveImageServiceRequest
-                .builder( ImageName.of( form.getName() ), image.getOriginalFilename(), image.getBytes(), image.getContentType() )
+                .builder( ImageName.of( form.getName() ), image.getBytes(), contentType )
                 .favorite( form.isFavorite() )
                 .categories( form.getCategories().stream().map( CategoryId::of ).collect( Collectors.toSet() ))
                 .tags( form.getTags().stream().map( TagId::of ).collect( Collectors.toSet() ));
