@@ -33,7 +33,7 @@ services:
       IMAGES_DIRECTORY: ./images
       IMAGES_URL: /api/v1/resources/images
       IMAGES_DEFAULT_LIMIT: 25
-      CORS_ALLOWED_ORIGINS: http://localhost:63343
+      CORS_ALLOWED_ORIGINS: http://localhost:3000
       CORS_ALLOWED_METHODS: "GET, POST, PUT, DELETE, OPTIONS"
       CORS_ALLOWED_HEADERS: "*"
       CORS_ALLOW_CREDENTIALS: true
