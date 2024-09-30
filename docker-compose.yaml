@@ -30,8 +30,7 @@ services:
       DATABASE_URL: jdbc:mysql://database:3306/aipixel-db?allowPublicKeyRetrieval=true
       DATABASE_USER: aipixel.user
       DATABASE_PASSWORD: aipixel.pass
-      RESOURCES_PATHS: "'file:./public/'"
-      IMAGES_DIRECTORY: ./public/resources/images
+      IMAGES_DIRECTORY: ./images
       IMAGES_URL: /api/v1/resources/images
       IMAGES_DEFAULT_LIMIT: 25
       CORS_ALLOWED_ORIGINS: http://localhost:63343

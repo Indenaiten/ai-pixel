@@ -16,9 +16,6 @@ app:
       allowed-headers: ${CORS_ALLOWED_HEADERS}
       allow-credentials: ${CORS_ALLOW_CREDENTIALS}
 
-    resources:
-      paths: ${RESOURCES_PATHS}
-
 spring:
   application:
     name: *app-name

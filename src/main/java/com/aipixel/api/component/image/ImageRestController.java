@@ -4,6 +4,7 @@ import com.aipixel.api.common.controller.response.ApiResponse;
 import com.aipixel.api.component.image.controller.dto.ImageDto;
 import com.aipixel.api.component.image.controller.form.SaveImageForm;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +18,14 @@ import java.util.List;
 public interface ImageRestController {
 
     /**
-     * Obtiene la URL base de las imágenes.
+     * Obtiene los bytes de una imagen por su identificador.
      *
-     * @return Una {@link ApiResponse} con la URL base de la imagen.
+     * @param id El identificador de la imagen.
+     *
+     * @return Los bytes de la imagen.
      */
-    @GetMapping( "/url" )
-    ApiResponse<String> getUrlBaseImage( );
+    @GetMapping( "/view/{id}" )
+    ResponseEntity<byte[]> viewImage(@PathVariable( "id" ) String id );
 
 
     /**

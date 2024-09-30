@@ -17,6 +17,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -90,6 +91,15 @@ public class ImageServiceImpl implements ImageService {
         return this.imageRepository.findById( id ).orElseThrow( () -> new ImageNotFoundException(
                 String.format( "No se ha encontrado ninguna imagen con el identificador \"%s\"", id.toString() )
         ));
+    }
+
+
+    @Override
+    public File findImageFileById( final ImageId id ) throws ImageNotFoundException {
+        final Image image = this.findById( id );
+        final String imagesDirectory = this.imagesProperties.getImagesDirectory();
+        final String imageFilePath = String.format( "%s\\%s", imagesDirectory, image.getFileName().getNameValue() );
+        return new File( imageFilePath );
     }
 
 

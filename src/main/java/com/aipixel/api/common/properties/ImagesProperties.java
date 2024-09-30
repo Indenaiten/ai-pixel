@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImagesProperties extends Properties {
 
-    @Value("${app.images.url}")
-    private String imagesUrlBase;
-
     @Value("${app.images.directory}")
     private String imagesDirectory;
 

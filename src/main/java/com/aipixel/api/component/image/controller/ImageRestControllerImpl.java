@@ -1,7 +1,6 @@
 package com.aipixel.api.component.image.controller;
 
 import com.aipixel.api.common.controller.response.ApiResponse;
-import com.aipixel.api.common.properties.ImagesProperties;
 import com.aipixel.api.component.image.Image;
 import com.aipixel.api.component.image.ImageMapper;
 import com.aipixel.api.component.image.ImageRestController;
@@ -11,8 +10,14 @@ import com.aipixel.api.component.image.controller.form.SaveImageForm;
 import com.aipixel.api.component.image.service.request.SaveImageServiceRequest;
 import com.aipixel.api.component.image.vo.ImageId;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +28,6 @@ import java.util.Optional;
 @RestController
 public class ImageRestControllerImpl implements ImageRestController {
 
-    private final ImagesProperties imagesProperties;
     private final ImageService imageService;
 
 
@@ -35,14 +39,11 @@ public class ImageRestControllerImpl implements ImageRestController {
     /**
      * Constructor al que se le inyectan las dependencias necesarias.
      *
-     * @param imagesProperties Las propiedades de las imágenes.
      * @param imageService El servicio de imágenes.
      */
     public ImageRestControllerImpl(
-            final ImagesProperties imagesProperties,
             final ImageService imageService
     ) {
-        this.imagesProperties = imagesProperties;
         this.imageService = imageService;
     }
 
@@ -52,10 +53,23 @@ public class ImageRestControllerImpl implements ImageRestController {
 // ---| IMPLEMENTED METHODS |---------------------------------------------------------------------------------------- \\
 // ------------------------------------------------------------------------------------------------------------------ \\
 
-
+    @SneakyThrows
     @Override
-    public ApiResponse<String> getUrlBaseImage() {
-        return ApiResponse.success().build( this.imagesProperties.getImagesUrlBase() );
+    public ResponseEntity<byte[]> viewImage( final String id ) {
+        final File image = this.imageService.findImageFileById( ImageId.of( id ));
+        final Path imagePath = image.toPath();
+
+        MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
+        final String fileContentType = Files.probeContentType( imagePath );
+        if( Optional.ofNullable( fileContentType ).isPresent() ) {
+            mediaType = MediaType.parseMediaType( fileContentType );
+        }
+
+        final byte[] bytes = Files.readAllBytes( imagePath );
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType( mediaType );
+
+        return ResponseEntity.ok().headers( headers ).body( bytes );
     }
 
 

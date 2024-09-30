@@ -6,6 +6,7 @@ import com.aipixel.api.component.image.vo.ImageId;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,18 @@ public interface ImageService {
      * @throws ImageNotFoundException Si la imagen no existe.
      */
     Image findById( ImageId id ) throws ImageNotFoundException;
+
+
+    /**
+     * Obtiene una imagen por su identificador.
+     *
+     * @param id El identificador de la imagen de tipo {@link ImageId}.
+     *
+     * @return Un {@link File} con la imagen.
+     *
+     * @throws ImageNotFoundException Si la imagen no existe.
+     */
+    File findImageFileById( ImageId id ) throws ImageNotFoundException;
 
 
     /**
