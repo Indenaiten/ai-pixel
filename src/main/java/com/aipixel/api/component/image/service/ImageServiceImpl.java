@@ -87,6 +87,12 @@ public class ImageServiceImpl implements ImageService {
 
 
     @Override
+    public Long countAll() {
+        return this.imageRepository.countAll();
+    }
+
+
+    @Override
     public Image findById( final ImageId id ) throws ImageNotFoundException {
         return this.imageRepository.findById( id ).orElseThrow( () -> new ImageNotFoundException(
                 String.format( "No se ha encontrado ninguna imagen con el identificador \"%s\"", id.toString() )

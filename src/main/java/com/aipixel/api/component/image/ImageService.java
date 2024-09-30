@@ -32,6 +32,14 @@ public interface ImageService {
 
 
     /**
+     * Obtiene el número total de imágenes.
+     *
+     * @return El número total de imágenes.
+     */
+    Long countAll();
+
+
+    /**
      * Obtiene una imagen por su identificador.
      *
      * @param id El identificador de la imagen de tipo {@link ImageId}.

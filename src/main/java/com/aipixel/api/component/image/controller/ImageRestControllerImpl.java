@@ -83,6 +83,13 @@ public class ImageRestControllerImpl implements ImageRestController {
     }
 
 
+    @Override
+    public ApiResponse<Long> countAll() {
+        final Long result = this.imageService.countAll();
+        return ApiResponse.success().build( result );
+    }
+
+
     @SneakyThrows
     @Override
     public ApiResponse<ImageDto> findById( final String id ) {

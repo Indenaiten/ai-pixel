@@ -28,6 +28,14 @@ public interface ImageRepository {
 
 
     /**
+     * Obtiene el número total de imágenes.
+     *
+     * @return El número total de imágenes.
+     */
+    Long countAll();
+
+
+    /**
      * Busca y recupera una imagen por su identificador.
      *
      * @param id El identificador de la imagen de tipo {@link ImageId}.

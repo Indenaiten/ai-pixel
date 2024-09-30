@@ -62,6 +62,12 @@ public class ImageRepositoryImpl implements ImageRepository {
 
 
     @Override
+    public Long countAll() {
+        return this.imageDao.count();
+    }
+
+
+    @Override
     public Optional<Image> findById( final ImageId id ) {
         return this.imageDao.findById( id.toString() ).map( ImageMapper::modelToEntity );
     }

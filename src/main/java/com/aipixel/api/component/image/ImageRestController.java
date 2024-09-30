@@ -40,6 +40,15 @@ public interface ImageRestController {
 
 
     /**
+     * Obtiene el número total de imágenes.
+     *
+     * @return Una {@link ApiResponse} de tipo {@link Long} con el número total de imágenes.
+     */
+    @GetMapping( "/count/all" )
+    ApiResponse<Long> countAll();
+
+
+    /**
      * Obtiene una imagen por su identificador.
      *
      * @param id El identificador de la imagen.
