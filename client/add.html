@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Subir Imagen</title>
+        <link rel="stylesheet" href="./resources/css/add.css">
+        <link rel="stylesheet" href="./resources/css/masonry.css">
+    </head>
+    <body>
+
+        <div class="container">
+
+            <form id="imageForm" enctype="multipart/form-data">
+                <h2>Subir Imagen</h2>
+
+                <!-- Nombre de la imagen -->
+                <div class="form-group">
+                    <label for="name">Nombre de la imagen</label>
+                    <input type="text" id="name" name="name" placeholder="Introduce el nombre de la imagen" required>
+                </div>
+
+                <!-- Subir imagen -->
+                <div class="form-group">
+                    <label for="image">Subir Imagen</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+
+                <!-- Favorito -->
+                <div class="form-group">
+                    <label for="favorite">Favorito</label>
+                    <input type="checkbox" id="favorite" name="favorite">
+                </div>
+
+                <!-- Fecha -->
+                <div class="form-group">
+                    <label for="date">Fecha</label>
+                    <input type="date" id="date" name="date">
+                </div>
+
+                <!-- Descripción -->
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea id="description" name="description" placeholder="Agrega una descripción..." rows="4"></textarea>
+                </div>
+
+                <!-- Valoración -->
+                <div class="form-group">
+                    <label for="valoration">Valoración</label>
+                    <input type="number" id="valoration" name="valoration" min="1" max="5" step="1" placeholder="1-5">
+                </div>
+
+                <!-- Botón de envío -->
+                <button type="submit" class="btn-submit">Enviar</button>
+                <hr/>
+                <button id="addBatch25" type="button" class="btn-submit">add 25</button>
+                <hr/>
+                <button id="addBatch" type="button" class="btn-submit">add 100</button>
+            </form>
+            <div class="masonry"></div>
+        </div>
+    </body>
+
+    <script>
+        const KEY_ID = 'id';
+        const KEY_FAV = 'favorite';
+        const KEY_DATE = 'date';
+        const KEY_TITLE = 'name';
+        const KEY_PROMPT = 'description';
+        const KEY_TAGS = 'tags';
+        const KEY_IMAGE = 'fileName';
+
+        const CLASS_NAME_MASONRY = 'masonry';
+        const CLASS_NAME_CARD = 'card';
+        const CLASS_NAME_FAV = 'fav';
+        const CLASS_NAME_NONE = 'none';
+        const CLASS_NAME_TITLE = 'title';
+        const CLASS_NAME_ID = 'id';
+        const CLASS_NAME_DESCRIPTION = 'description';
+        const CLASS_NAME_TAG = 'tag';
+        const CLASS_NAME_CLICKABLE = 'clickable';
+
+        const ID_SEARCH = 'search';
+
+        function show( item ){
+            const masonry = document.querySelector( `.${CLASS_NAME_MASONRY}` );
+
+            const id = item[ KEY_ID ];
+            const fav = item[ KEY_FAV ];
+            const date = item[ KEY_DATE ];
+            const title = item[ KEY_TITLE ];
+            const prompt = item[ KEY_PROMPT ];
+            const tags = item[ KEY_TAGS ];
+            const image = item[ KEY_IMAGE ];
+
+            const cardElement = document.createElement( 'div' );
+            cardElement.classList.add( CLASS_NAME_CARD );
+
+            const favElement = document.createElement( 'span' );
+            favElement.classList.add( CLASS_NAME_FAV );
+            if( !fav ) favElement.classList.add( CLASS_NAME_NONE );
+            favElement.innerHTML = '★';
+
+            const mainElement = document.createElement( 'main' );
+
+            const imageElement = document.createElement( 'img' );
+            imageElement.src = `http://localhost:8080/api/image/view/${id}`;
+            imageElement.alt = title;
+            imageElement.loading = 'lazy';
+
+            const titleElement = document.createElement( 'h1' );
+            titleElement.classList.add( CLASS_NAME_TITLE );
+            titleElement.classList.add( CLASS_NAME_CLICKABLE );
+            titleElement.textContent = title;
+            titleElement.addEventListener( 'click', function(){ copyToClipBoard( title ) });
+
+            const idElement = document.createElement( 'small' );
+            idElement.classList.add( CLASS_NAME_ID );
+            idElement.textContent = id;
+            idElement.addEventListener( 'click', function(){ copyToClipBoard( id ) });
+
+            const descriptionElement = document.createElement( 'p' );
+            descriptionElement.classList.add( CLASS_NAME_DESCRIPTION );
+            descriptionElement.classList.add( CLASS_NAME_CLICKABLE );
+            descriptionElement.textContent = prompt;
+            descriptionElement.addEventListener( 'click', function(){ copyToClipBoard( prompt ) });
+
+            mainElement.appendChild( imageElement );
+            mainElement.appendChild( titleElement );
+            mainElement.appendChild( idElement );
+            mainElement.appendChild( descriptionElement );
+
+            const footerElement = document.createElement( 'footer' );
+
+            tags.forEach( tagText => {
+                const tag = document.createElement( 'span' );
+                tag.classList.add( CLASS_NAME_TAG );
+                tag.classList.add( CLASS_NAME_CLICKABLE );
+                tag.textContent = tagText;
+                tag.addEventListener( 'click', function(){
+                    copyToClipBoard( tagText );
+                    show( search( tagText ) );
+                    document.getElementById( ID_SEARCH ).value = tagText;
+                });
+                footerElement.appendChild( tag );
+            });
+
+            cardElement.appendChild( favElement );
+            cardElement.appendChild( mainElement );
+            cardElement.appendChild( footerElement );
+
+            masonry.prepend( cardElement );
+        }
+
+
+        document.getElementById('addBatch25').addEventListener('click', async function(event) {
+            event.preventDefault();
+            for( let i = 0 ; i < 25 ; i++ ){
+                save( false );
+            }
+        });
+
+
+        document.getElementById('addBatch').addEventListener('click', async function(event) {
+            event.preventDefault();
+            for( let i = 0 ; i < 100 ; i++ ){
+                save( false );
+            }
+        });
+
+
+        document.getElementById('imageForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            save();
+        });
+
+        async function save(  resetForm = true ){
+            const form = document.getElementById('imageForm');
+
+            // Crear un objeto FormData vacío
+            const formData = new FormData();
+
+            // Iterar sobre los elementos del formulario
+            Array.from(form.elements).forEach(element => {
+                if (element.name && !element.disabled) {
+                    // Manejar inputs de tipo file
+                    if (element.type === 'file') {
+                        if (element.files && element.files.length > 0) {
+                            // Añadir el archivo al FormData
+                            formData.append(element.name, element.files[0]);
+                        }
+                    }
+                    // Manejar checkboxes
+                    else if (element.type === 'checkbox') {
+                        if (element.checked) {
+                            formData.append(element.name, element.value || 'true');
+                        } else {
+                            // Si no está marcado, no se añade al FormData
+                            // Si deseas enviar 'false' cuando no está marcado, descomenta la siguiente línea
+                            // formData.append(element.name, 'false');
+                        }
+                    }
+                    // Manejar inputs de tipo date
+                    else if (element.type === 'date') {
+                        if (element.valueAsDate) {
+                            formData.append(element.name, element.value);
+                        }
+                        // Si no se ha seleccionado una fecha, no se añade al FormData
+                    }
+                    // Manejar otros tipos de inputs
+                    else {
+                        if (element.value.trim() !== '') {
+                            formData.append(element.name, element.value);
+                        }
+                    }
+                }
+            });
+
+            // Enviar los datos usando fetch
+            fetch('http://localhost:8080/api/image/save', {
+                method: 'POST',
+                body: formData,
+                // No es necesario establecer 'Content-Type' aquí; fetch lo hace automáticamente con FormData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // O response.text() si el servidor no devuelve JSON
+                    } else {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                })
+                .then(data => {
+                    resetForm && form.reset();
+                    const id = data.data;
+                    fetch(`http://localhost:8080/api/image/find/id/${id}`).then( res => res.json() ).then( res => {
+                        show( res.data );
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Hubo un problema al subir la imagen');
+                });
+        }
+    </script>
+
+</html>

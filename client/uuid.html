@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>UUID</title>
+        <script>
+            window.addEventListener( 'load', function(){
+               const uuidElement = document.getElementById('uuid');
+               const copyBtnElement = document.getElementById('copy-btn');
+               copyBtnElement.addEventListener('click', function(){
+                   const uuid = self.crypto.randomUUID();
+                   uuidElement.innerHTML = uuid;
+                   copyToClipBoard( uuid )
+               });
+
+               uuidElement.innerHTML = self.crypto.randomUUID();
+            });
+
+            async function copyToClipBoard( text ){
+                try {
+                    await navigator.clipboard.writeText( text );
+                    showMessage( 'success', `Texto copiado al portapapeles` );
+                } catch (err) {
+                    showMessage( 'error', `Error al copiar el texto al portapapeles: ${err}` );
+                }
+                console.log( text );
+            }
+        </script>
+    </head>
+    <body>
+        <h1 id="uuid"></h1>
+        <button id="copy-btn">Copiar</button>
+    </body>
+</html>

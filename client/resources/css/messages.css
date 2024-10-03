@@ -1,0 +1,30 @@
+#messages{
+    width: 100vw;
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    bottom: 25px;
+    right: 5%;
+}
+
+#messages > .message{
+    max-width: 35%;
+    min-height: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 15px 25px;
+    margin-top: 15px;
+}
+
+#messages > .message.error{
+    background-color: red;
+    color: #FFF;
+}
+
+#messages > .message.success{
+    background-color: rgb(0, 133, 11);
+    color: #FFF;
+}

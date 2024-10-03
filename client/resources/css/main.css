@@ -1,0 +1,16 @@
+/* General Style */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Clickable Elements Style */
+.clickable {
+    cursor: pointer;
+}

@@ -1,0 +1,83 @@
+/* Card Style */
+.masonry .card {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    break-inside: avoid;
+    overflow: hidden;
+}
+
+/* Fav Style */
+.masonry .card .fav {
+    position: absolute;
+    top: -10px;
+    right: 5px;
+    color: #ffbd16;
+    font-size: 45px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    padding: 10px;
+    grid-row-end: span 1;
+}
+.masonry .card .fav.none {
+    display: none;
+}
+
+/* Image Style */
+.masonry .card main img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Title Style */
+.masonry .card main .title {
+    padding: 15px 10px 0 10px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* ID Style */
+.masonry .card main .id {
+    padding: 15px 10px 0 10px;
+    font-size: 15px;
+    font-style: italic;
+    color: #888;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Description Style */
+.masonry .card main .description {
+    padding: 15px 10px;
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    font-style: italic;
+    cursor: pointer;
+}
+
+/* Tags Style */
+.masonry .card footer {
+    padding: 5px 10px 15px 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.masonry .card footer .tag {
+    padding: 3px 5px;
+    margin: 3px 3px;
+    font-size: 14px;
+    color: #FFF;
+    background-color: #333;
+    border-radius: 3px;
+    word-break: keep-all;
+}
+
+.masonry .card footer .tag:hover{
+    box-shadow: 0 3px 5px 0px #333;
+}

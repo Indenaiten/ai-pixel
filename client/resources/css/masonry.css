@@ -1,0 +1,19 @@
+/* Masonry Layout Styles */
+
+/* Masonry Container */
+.masonry {
+    width: 100%; /* With of the Masonry */
+    display: flex; /* Flex container */
+    justify-content: space-between; /* Distribute the columns with the same space and space between them */
+    gap: 15px; /* Size of the space between the columns */
+    padding: 25px; /* Size of the padding of the Masonry */
+}
+
+
+/** Masonry Column */
+.masonry > .masonry-column {
+    flex: 1; /* Each column will have the same size */
+    display: flex; /* Flex container */
+    flex-direction: column; /* Columns will be displayed in a column */
+    gap: 15px; /* Size of the space between the cards */
+}
